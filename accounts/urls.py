@@ -5,7 +5,8 @@ from accounts.views import *
 app_name = 'accounts'
 
 urlpatterns = [
-    path('sign-in', LoginView, name='sign-in'),
+    path('sign-in/', LoginView, name='sign-in'),
+    path('sign-out/', logout_view, name='logout_view'),
     # path('sitemap.xml', RedirectView.as_view(url=staticfiles_storage.url('sitemap.xml'), ), name="sitemap"),
     #
     # path('robots.txt', RedirectView.as_view(url=staticfiles_storage.url('robots.txt'), ), name="robots"),

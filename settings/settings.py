@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'accounts',
     'main',
     'crm',
-    'ckeditor'
+    'ckeditor',
+    'crispy_forms',
+
 ]
 AUTH_USER_MODEL = "accounts.MyUser"
 MIDDLEWARE = [

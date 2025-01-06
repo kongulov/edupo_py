@@ -14,7 +14,25 @@ from accounts.options.options import *
 USER_MODEL = settings.AUTH_USER_MODEL
 
 
+class Company(models.Model):
+    name = models.CharField(max_length=1500, verbose_name="Company name")
+    package_company = models.IntegerField(
+        choices=PACKAGES, verbose_name="Company Package", null=True, blank=True)
+    tax_id = models.CharField(max_length=1200, verbose_name="Tax id")
+    reg_date = models.DateTimeField(auto_now_add=True, verbose_name="Registration date")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Company"
+        verbose_name_plural = "Companies"
+        ordering = ['-reg_date']
+
+
 class MyUser(AbstractBaseUser, PermissionsMixin):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name="Company", related_name="user_company",
+                                null=True)
     username = models.CharField(_('username'), null=True, max_length=100, unique=False)
     first_name = models.CharField(_('Ad'), max_length=255, blank=True, )
     last_name = models.CharField(_('Soyad'), max_length=255, blank=True)

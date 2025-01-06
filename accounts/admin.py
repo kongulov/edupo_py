@@ -7,7 +7,7 @@ from accounts.models import *
 
 User = get_user_model()
 
-
+admin.site.register(Company)
 @admin.register(User)
 class MyUserAdmin(UserAdmin):
     fieldsets = (
@@ -27,7 +27,7 @@ class MyUserAdmin(UserAdmin):
     # # The forms to add and change user instances
     # form = MyUserChangeForm
     # add_form = MyUserCreationForm
-    list_display = ('first_name', 'last_name','usertype', 'email', 'is_superuser', 'is_active')
+    list_display = ('first_name', 'last_name','company','usertype', 'email', 'is_superuser', 'is_active')
     list_display_links = ('first_name', 'last_name', 'email')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups',)
     # search_fields = ('first_name', 'last_name', 'email')

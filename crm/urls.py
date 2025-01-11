@@ -10,11 +10,8 @@ app_name = 'crm'
 
 urlpatterns = [
     path('crm-dashboard', DashboardView, name='crm-dashboard'),
-    # path('sitemap.xml', RedirectView.as_view(url=staticfiles_storage.url('sitemap.xml'), ), name="sitemap"),
-    #
-    # path('robots.txt', RedirectView.as_view(url=staticfiles_storage.url('robots.txt'), ), name="robots"),
-    # path('telimler', CourseView, name='course'),
-    # path('bloqlar', BlogView, name='blog'),
+    path('customers', CustomersView, name='customers'),
+    path('customer-add', CustomerAddView, name='customer-add'),
     # path('bloq/<slug>/', blog_detail_view, name='blog_detail_view'),
     # path('bloq/kateqoriya/<slug>/', category_view, name='category_view'),
     # path('korporativ-telimler', CorparateCourseView, name='corportecourse'),

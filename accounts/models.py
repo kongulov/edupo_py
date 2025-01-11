@@ -15,6 +15,7 @@ USER_MODEL = settings.AUTH_USER_MODEL
 
 
 class Company(models.Model):
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,related_name="company_owner")
     name = models.CharField(max_length=1500, verbose_name="Company name")
     package_company = models.IntegerField(
         choices=PACKAGES, verbose_name="Company Package", null=True, blank=True)

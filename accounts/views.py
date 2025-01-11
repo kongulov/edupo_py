@@ -41,6 +41,7 @@ def signup_view(request):
             user.save()
             company = co_form.save(commit=False)
             company.package_company = 1
+            company.owner = user
             company.save()
 
             user = form.save(commit=False)

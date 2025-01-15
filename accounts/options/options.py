@@ -30,7 +30,6 @@ GENDER = (
     (2, _("Female")),
 )
 
-
 NEXT_STEP = (
     (1, _("Follow up")),
     (2, _("Retarget")),
@@ -111,4 +110,45 @@ COUNTRY_CITIES = (
     (65, _('Zaqatala')),
     (66, _('Zəngilan')),
     (67, _('Zərdab')),
+)
+INDUSTRY_CHOICES = [
+    (1, _('Technology')),
+    (2, _('Healthcare')),
+    (3, _('Finance')),
+    (4, _('Education')),
+    (5, _('Retail')),
+    (6, _('Manufacturing')),
+    (7, _('Real Estate')),
+    (8, _('Entertainment')),
+    (9, _('Energy')),
+    (10, _('Transportation')),
+    (11, _('Telecommunications')),
+    (12, _('Hospitality')),
+    (13, _('Construction')),
+    (14, _('Legal')),
+    (15, _('Agriculture')),
+    (16, _('Automotive')),
+    (17, _('Aerospace')),
+    (18, _('Pharmaceutical')),
+    (19, _('Insurance')),
+    (20, _('Media')),
+    (21, _('Consumer Goods')),
+    (22, _('Food & Beverage')),
+    (23, _('Mining')),
+    (24, _('Utilities')),
+    (25, _('Non-profit')),
+    (26, _('Environmental')),
+    (27, _('Government')),
+    (28, _('Sports')),
+    (29, _('Arts & Culture')),
+    (30, _('Security')),
+]
+
+ORDER_STATUS = (
+    (1, _("New")),
+    (2, _("Qualified")),
+    (3, _("Processing")),
+    (4, _("Postponed")),
+    (5, _('Contracted')),
+    (6, _('Rejected')),
 )

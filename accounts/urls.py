@@ -8,7 +8,6 @@ urlpatterns = [
     path('sign-in/', LoginView, name='sign-in'),
     path('sign-up/', signup_view, name='sign-up'),
     path('sign-out/', logout_view, name='logout_view'),
-    # path('sitemap.xml', RedirectView.as_view(url=staticfiles_storage.url('sitemap.xml'), ), name="sitemap"),
     #
     # path('robots.txt', RedirectView.as_view(url=staticfiles_storage.url('robots.txt'), ), name="robots"),
     # path('telimler', CourseView, name='course'),

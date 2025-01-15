@@ -72,8 +72,6 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return u'%s %s' % (self.first_name, self.last_name)
 
-    def get_absolute_url(self):
-        return reverse('products:user_classified_view', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         super(MyUser, self).save(*args, **kwargs)
@@ -89,3 +87,5 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
             return self.user_image.url
         else:
             return "/static/assets/m-student.png"
+
+

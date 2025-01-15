@@ -1,4 +1,5 @@
 import random
+
 from django.utils.translation import gettext_lazy as _
 
 from accounts.models import *
@@ -45,3 +46,41 @@ class Customers(models.Model):
                     break
         self.slug = "{}.{}".format(slugify(self.first_name + "-" + self.last_name), self.id)
         super(Customers, self).save(*args, **kwargs)
+
+
+class UserCompany(models.Model):
+    company_id = models.CharField(max_length=20, unique=True, editable=False, null=True, verbose_name=_('Company ID'))
+    name = models.CharField(max_length=1500, verbose_name=_('Company Name'))
+    industry = models.IntegerField(choices=INDUSTRY_CHOICES, verbose_name=_('Industry'), null=True)
+    contact_person = models.CharField(max_length=1500, verbose_name=_('Contact Person'))
+    position = models.CharField(max_length=1500, verbose_name=_('Position'))
+    email = models.EmailField(_('Email'), max_length=1500)
+    mobile_number = models.CharField(_('Mobile Number'), max_length=15)
+    contract_number = models.CharField(_('Total contract'), max_length=50)
+    sales = models.CharField(_('Total Sales'), max_length=255)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Company')
+        verbose_name_plural = _('Companies')
+        ordering = ['-id']
+
+    def save(self, *args, **kwargs):
+        super(UserCompany, self).save(*args, **kwargs)
+        if not self.company_id:
+            while True:
+                random_number = random.randint(100000, 999999)
+                new_company_id = f"IC-{random_number}"
+                if not Customers.objects.filter(customer_id=new_company_id).exists():
+                    self.customer_id = new_company_id
+                    break
+        self.slug = "{}.{}".format(slugify(self.name), self.id)
+        super(UserCompany, self).save(*args, **kwargs)
+
+
+# class Order(models.Model):
+#     user_company = models.ForeignKey(UserCompany, on_delete=models.SET_NULL, null=True, verbose_name=_('User Company'))
+#     status = models.IntegerField(choices=ORDER_STATUS, verbose_name=_('Industry'), null=True)
+#

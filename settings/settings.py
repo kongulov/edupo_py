@@ -47,6 +47,8 @@ AUTH_USER_MODEL = "accounts.MyUser"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'settings.middleware.force_default_middleware.force_default_language_middleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -127,9 +129,15 @@ USE_L10N = True
 
 USE_TZ = True
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+LANGUAGE_CODE = 'en'
+LANGUAGES = (
+    ('en', 'English'),
+    ('az', 'Azərbaycan'),
+)
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
 STATIC_URL = '/static/'
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 if DEBUG:

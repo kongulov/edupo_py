@@ -6,11 +6,19 @@ app_name = 'crm'
 
 urlpatterns = [
     path('crm-dashboard', DashboardView, name='crm-dashboard'),
-    path('customers', CustomersView, name='customers'),
-    path('customer-add', CustomerAddView, name='customer-add'),
+    # customers
+    path('customers/', CustomersView, name='customers'),
+    path('customer-add/', CustomerAddView, name='customer-add'),
     path('customer/<slug>/', CustomerUpdateView, name='customer-update'),
+
+    # user companies
+
+    path('companies/', UserCompanyView, name='user-companies'),
+    path('company-add/', UserCompanyAddView, name='company-add'),
+    path('company/<slug>/', UserCompanyUpdateView, name='company-update'),
+    path('contacts', ContactView, name='contacts'),
+
     # path('bloq/kateqoriya/<slug>/', category_view, name='category_view'),
-    # path('korporativ-telimler', CorparateCourseView, name='corportecourse'),
     # path('haqqimizda', AboutView, name='about'),
     # #     path('faq/', views.FaqView, name='faq'),
     # #     path('sertler-qaydalar', views.PrivacyView, name='privacy'),

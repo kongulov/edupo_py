@@ -1,8 +1,9 @@
 from django import forms
 
-from .models import Customers
+from .models import *
 
 
+# start Customer forms
 class CustomerAddForm(forms.ModelForm):
     class Meta:
         model = Customers
@@ -70,7 +71,57 @@ class CustomerUpdateForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        # Burada herhangi bir 'slug' parametresinin gönderilmemesi gerektiğini kontrol ediyoruz
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control col-md-6'})
+
+
+# end Customer forms
+
+# start Customer forms
+
+class UserCompanyAddForm(forms.ModelForm):
+    class Meta:
+        model = UserCompany
+        fields = (
+            'name',
+            'industry',
+            'contact_person',
+            'position',
+            'email',
+            'mobile_number',
+        )
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'industry': forms.Select(attrs={'class': 'form-control'}),
+            'contact_person': forms.TextInput(attrs={'class': 'form-control'}),
+            'position': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'mobile_number': forms.TextInput(attrs={'class': 'form-control'}),
+
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control col-md-6'})
+
+class UserCompanyUpdateForm(forms.ModelForm):
+    class Meta:
+        model = UserCompany
+        fields = (
+            'name',
+            'industry',
+        )
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'industry': forms.Select(attrs={'class': 'form-control'}),
+
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control col-md-6'})
+
+# end Customer forms

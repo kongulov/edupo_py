@@ -9,3 +9,6 @@ class CustomerAdmin(admin.ModelAdmin):
 
 
 admin.site.register(UserCompany)
+admin.site.register(Course)
+admin.site.register(ContactPerson)
+admin.site.register(Order)

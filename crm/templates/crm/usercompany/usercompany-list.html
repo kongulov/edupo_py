@@ -155,14 +155,14 @@
                                                     <td>
                                                         {% with contact_person=obj.get_last_contact_person %}
                                                             {% if contact_person %}
-                                                                {{ contact_person.name }}
+                                                                {{ contact_person.get_full_name }}
                                                             {% else %}
                                                                 No Contact Person
                                                             {% endif %}
                                                         {% endwith %}
                                                     </td>
                                                     <td>
-                                                   {% with contact_person=obj.get_last_contact_person %}
+                                                        {% with contact_person=obj.get_last_contact_person %}
                                                             {% if contact_person %}
                                                                 {{ contact_person.position }}
                                                             {% else %}
@@ -172,7 +172,7 @@
                                                     </td>
 
                                                     <td>
-                                                       {% with contact_person=obj.get_last_contact_person %}
+                                                        {% with contact_person=obj.get_last_contact_person %}
                                                             {% if contact_person %}
                                                                 {{ contact_person.email }}
                                                             {% else %}
@@ -190,7 +190,7 @@
                                                             {% endif %}
                                                         {% endwith %}
                                                     </td>
-                                                    <td style="text-align: center">{{ obj.contract_number }}</td>
+                                                    <td style="text-align: center">{{ obj.total_contracts }}</td>
 
                                                     <td style="text-align: center">
                                                         {{ obj.sales }}

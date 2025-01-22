@@ -17,6 +17,13 @@ urlpatterns = [
     path('company-add/', UserCompanyAddView, name='company-add'),
     path('company/<slug>/', UserCompanyUpdateView, name='company-update'),
     path('contacts', ContactView, name='contacts'),
+    path('contact-add/', ContactPersonAddView, name='contact-add'),
+    path('contact/<slug>/', ContactPersonUpdateView, name='contact-update'),
+
+    # orders
+    path('orders/', OrdersView, name='orders'),
+    path('order-add/', OrderAddView, name='order-add'),
+    path('order/<slug>/', OrderUpdateView, name='order-update'),
 
     # path('bloq/kateqoriya/<slug>/', category_view, name='category_view'),
     # path('haqqimizda', AboutView, name='about'),

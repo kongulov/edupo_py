@@ -7,7 +7,7 @@
                 <div class="col-lg-12">
                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 my-schedule mb-4">
                         <div class="d-flex align-items-center justify-content-between">
-                            <h4 class="fw-bold">Companies </h4>
+                            <h4 class="fw-bold">Orders</h4>
                         </div>
                         <div class="create-workform">
                             <div class="d-flex flex-wrap align-items-center justify-content-between">
@@ -15,7 +15,7 @@
                                     <form class="me-3 position-relative">
                                         <div class="form-group mb-0">
                                             <input type="text" class="form-control" id="exampleInputText"
-                                                   placeholder="Search Company">
+                                                   placeholder="Search Order">
                                             <a class="search-link" href="#">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="" width="20" fill="none"
                                                      viewBox="0 0 24 24" stroke="currentColor">
@@ -26,14 +26,14 @@
                                             </a>
                                         </div>
                                     </form>
-                                    <a href="{% url 'crm:customer-add' %}"
+                                    <a href="{% url 'crm:order-add' %}"
                                        class="btn btn-primary position-relative d-flex align-items-center justify-content-between">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="me-2" width="20" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                   d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                                         </svg>
-                                        Add Company
+                                        Add Order
                                     </a>
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                             <div class="card car card-stretch">
                                 <div class="card-body p-0">
                                     <div class="d-flex justify-content-between align-items-center p-3 pb-md-0">
-                                        <h5 class="fw-bold">Company List</h5>
+                                        <h5 class="fw-bold">Order List</h5>
                                         <button class="btn btn-secondary btn-sm">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="me-1" width="20" fill="none"
                                                  viewBox="0 0 24 24" stroke="currentColor">
@@ -96,33 +96,27 @@
                                                         </div>
                                                     </div>
                                                 </th>
+                                                <th scope="col">№</th>
                                                 <th scope="col">
                                                     Company Name
                                                 </th>
                                                 <th scope="col">
-                                                    Industry
+                                                    Status
                                                 </th>
 
                                                 <th scope="col">
                                                     Contact Person
                                                 </th>
-
                                                 <th scope="col">
-                                                    Position
+                                                    Course
                                                 </th>
 
                                                 <th scope="col">
-                                                    Email
-                                                </th>
-                                                <th scope="col">
-                                                    Mobile Number
-                                                </th>
-                                                <th scope="col">
-                                                    Contract Number
+                                                    Participants
                                                 </th>
 
                                                 <th scope="col">
-                                                    Sales
+                                                    Order Date
                                                 </th>
 
                                                 <th scope="col">
@@ -131,7 +125,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% for obj in company_list %}
+                                            {% for obj in orders_list %}
                                                 <tr class="white-space-no-wrap">
                                                     <td class="pe-0 ">
                                                         <div class="form-check ">
@@ -141,35 +135,28 @@
                                                             </label>
                                                         </div>
                                                     </td>
+                                                    <td>{{ obj.order_id }}</td>
                                                     <td class="">
                                                         <div>
 
                                                             <div class="data-content">
                                                                 <div>
-                                                                    <span class="fw-bold">{{ obj.name }}</span>
+                                                                    <span class="fw-bold">{{ obj.user_company }}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td>{{ obj.get_industry_display }}</td>
+                                                    <td>{{ obj.get_status_display }}</td>
                                                     <td>
                                                         {{ obj.contact_person }}
                                                     </td>
+                                                    <td>{{ obj.course.name }}</td>
                                                     <td>
-                                                        {{ obj.position }}
+                                                        {{ obj.participants }}
                                                     </td>
 
                                                     <td>
-                                                        {{ obj.email }}
-                                                    </td>
-
-                                                    <td>
-                                                        {{ obj.mobile_number }}
-                                                    </td>
-                                                    <td>{{ obj.contract_number }}</td>
-
-                                                    <td>
-                                                        {{ obj.sales }}
+                                                        {{ obj.order_date|date:'j F Y' }}
                                                     </td>
 
                                                     <td>
@@ -190,7 +177,7 @@
                                                             </a>
                                                             <a class="" data-bs-toggle="tooltip" data-bs-placement="top"
                                                                title="Edit"
-                                                               href="{% url 'crm:customer-update' obj.slug %}">
+                                                               href="{% url 'crm:order-update' obj.slug %}">
                                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                                      class="text-secondary mx-4" width="20" fill="none"
                                                                      viewBox="0 0 24 24" stroke="currentColor">

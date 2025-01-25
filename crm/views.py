@@ -1,6 +1,9 @@
+import datetime
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max, Count, Subquery, OuterRef
+from django.db.models.functions import TruncDate
 from django.shortcuts import render, redirect, get_object_or_404
 
 from crm.forms import *
@@ -259,4 +262,28 @@ def OrderUpdateView(request, slug):
     context['form'] = form
     return render(request, 'crm/order/order-update.html', context)
 
+
 # end Order views
+
+# start Task views
+
+@login_required(login_url='/sign-in/')
+def TaskView(request):
+    context = {}
+    today = datetime.date.today()
+    tomorrow = today + datetime.timedelta(days=1)
+    two_days_later = today + datetime.timedelta(days=2)
+    context['today_task_list'] = Task.objects.annotate(deadline_date=TruncDate('deadline')).filter(
+        author=request.user, deadline_date=today
+    )
+    context['tomorrow_task_list'] = Task.objects.annotate(deadline_date=TruncDate('deadline')).filter(
+        author=request.user, deadline_date=tomorrow
+    )
+
+    context['upcoming_task_list'] = Task.objects.annotate(deadline_date=TruncDate('deadline')).filter(
+        author=request.user, deadline_date__gte=two_days_later
+    )
+    context['overdue_task_list'] = Task.objects.annotate(deadline_date=TruncDate('deadline')).filter(
+        author=request.user, deadline_date__lt=today
+    )
+    return render(request, 'crm/task/task-list.html', context)

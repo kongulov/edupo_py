@@ -152,3 +152,21 @@ ORDER_STATUS = (
     (5, _('Contracted')),
     (6, _('Rejected')),
 )
+
+TASK_TYPE = (
+    (1, _("Personal")),
+    (2, _("Phone Call")),
+    (3, _("Message")),
+    (4, _("Email")),
+)
+PRIORITY_LEVEL = (
+    (1, _("High")),
+    (2, _("Medium")),
+    (3, _("Low")),
+)
+
+TASK_STATUS = (
+    (1, _("To Do")),
+    (2, _("In Progress")),
+    (3, _("Done")),
+)

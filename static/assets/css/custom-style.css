@@ -1,0 +1,58 @@
+.task-type {
+    max-width: max-content;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+    color: white;
+}
+
+.task-status {
+    max-width: max-content;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+    color: white;
+    margin-left: 5px;
+}
+
+.task-type i {
+    font-size: 12px;
+}
+
+.task_type_call {
+    background: #38bf02;
+    border-color: #38bf02;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.task_type_personal {
+    background: #3378ff;
+    border-color: #3378ff !important;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.task_type_message {
+    background-color: #dbd406;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.task_type_email {
+    background: #f2ac4f;
+    font-size: 13px;
+    font-weight: bold;
+
+}
+
+.status_todo {
+    background: #38bf02;
+    border-color: #38bf02;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.task-status-bar {
+    display: flex;
+}

@@ -25,9 +25,11 @@ urlpatterns = [
     path('order-add/', OrderAddView, name='order-add'),
     path('order/<slug>/', OrderUpdateView, name='order-update'),
 
-    # path('bloq/kateqoriya/<slug>/', category_view, name='category_view'),
-    # path('haqqimizda', AboutView, name='about'),
-    # #     path('faq/', views.FaqView, name='faq'),
+    # task
+    path('tasks/', TaskView, name='tasks'),
+    # path('order-add/', OrderAddView, name='order-add'),
+    # path('order/<slug>/', OrderUpdateView, name='order-update'),
+
     # #     path('sertler-qaydalar', views.PrivacyView, name='privacy'),
     # #     path('istifadeci-huquqlari', views.UserRightsView, name='userrights'),
     # path('elaqe', ContactView, name='contact'),

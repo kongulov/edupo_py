@@ -174,3 +174,39 @@ class Order(models.Model):
 
         self.slug = slugify(str(self.course.name) + '-' + str(self.order_id))
         super(Order, self).save(*args, **kwargs)
+
+
+class Task(models.Model):
+    company = models.ForeignKey(Company, verbose_name=_('Task Company'), on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(MyUser, verbose_name=_('Task Author'), on_delete=models.SET_NULL, null=True)
+    task_id = models.CharField(max_length=20, unique=True, editable=False, null=True, verbose_name=_('Task ID'))
+    title = models.CharField(max_length=1200, verbose_name=_('Title'))
+    task_type = models.IntegerField(choices=TASK_TYPE, verbose_name=_('Task Type'))
+    created_date = models.DateTimeField(auto_now_add=True, verbose_name=_('Created at'))
+    deadline = models.DateTimeField(verbose_name=_('Due Date'))
+    priority = models.IntegerField(choices=PRIORITY_LEVEL, verbose_name=_('Priority'))
+    status = models.IntegerField(choices=TASK_STATUS, verbose_name=_('Task Status'))
+    slug = models.SlugField(max_length=150, unique=True, verbose_name=_('Slug'), null=True, editable=False)
+
+    def __str__(self):
+        return self.task_id
+
+    class Meta:
+        verbose_name = _('Task')
+        verbose_name_plural = _('Tasks')
+        ordering = ['-id']
+
+    def save(self, *args, **kwargs):
+        super(Task, self).save(*args, **kwargs)
+        if not self.task_id:
+            while True:
+                random_number = random.randint(100000, 999999)
+                new_task_id = f"T-{random_number}"
+                if not Task.objects.filter(task_id=new_task_id).exists():
+                    self.task_id = new_task_id
+                    break
+
+        self.slug = slugify(str(self.task_id))
+        super(Task, self).save(*args, **kwargs)
+
+

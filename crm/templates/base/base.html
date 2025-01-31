@@ -11,6 +11,8 @@
     <!-- Library / Plugin Css Build -->
     <link rel="stylesheet" href="{% static 'assets/css/core/libs.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/datum.mine209.css' %}">
+    {% block calendar_css %}
+    {% endblock %}
     <!-- Custom Css -->
     <link rel="stylesheet" href="{% static 'assets/css/custom.mine209.css' %}">
     <!-- Customizer Css -->
@@ -133,7 +135,7 @@
                         </a>
                     </li>
                     <li class=" sidebar-layout">
-                        <a href="app/calendar.html" class="svg-icon">
+                        <a href="{% url 'crm:calendar' %}" class="svg-icon">
                             <i class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24"
                                      stroke="currentColor">
@@ -142,7 +144,6 @@
                                 </svg>
                             </i>
                             <span class="ms-2">Calendar</span>
-                            <p class="mb-0 px-2 badge rounded-pill bg-success">New</p>
                         </a>
                     </li>
                     <li class="px-3 pt-3 pb-2">
@@ -1420,7 +1421,8 @@
 <!-- Emoji picker -->
 <script src="{% static 'assets/vendor/emoji-picker-element/index.js' %}" type="module"></script>
 
-
+{% block calendar_js %}
+{% endblock %}
 <!-- app JavaScript -->
 <script src="{% static 'assets/js/app.js' %}"></script>
 

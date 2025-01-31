@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max, Count, Subquery, OuterRef
 from django.db.models.functions import TruncDate
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from crm.forms import *
@@ -287,3 +288,21 @@ def TaskView(request):
         author=request.user, deadline_date__lt=today
     )
     return render(request, 'crm/task/task-list.html', context)
+
+
+# start calendar view#
+def calendar_view(request):
+    return render(request, 'crm/calendar/calendar-list.html')
+
+
+def get_events(request):
+    events = CalendarEvent.objects.all()
+    events_list = [
+        {
+            "title": event.title,
+            "start": event.start_datetime.strftime("%Y-%m-%dT%H:%M:%S"),
+            "end": event.end_datetime.strftime("%Y-%m-%dT%H:%M:%S"),
+            "color": event.color
+        } for event in events
+    ]
+    return JsonResponse(events_list, safe=False)

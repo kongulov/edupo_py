@@ -210,3 +210,23 @@ class Task(models.Model):
         super(Task, self).save(*args, **kwargs)
 
 
+class CalendarEvent(models.Model):
+    COLOR_CHOICES = [
+        ('#007bff', 'Blue'),  # Primary
+        ('#28a745', 'Green'),  # Success
+        ('#dc3545', 'Red'),  # Danger
+    ]
+
+    title = models.CharField(max_length=255)
+    content = models.TextField(blank=True, null=True)
+    start_datetime = models.DateTimeField()
+    end_datetime = models.DateTimeField()
+    color = models.CharField(max_length=10, choices=COLOR_CHOICES, default='#007bff')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = _('Calendar')
+        verbose_name_plural = _('Calendars')
+        ordering = ['-id']

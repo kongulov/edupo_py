@@ -1,0 +1,35 @@
+/* Aktif buton stilleri */
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+    color: #fff;
+    background-color: #3378ff;
+    border-color: #fff;
+}
+
+/* Normal buton stilleri */
+.fc .fc-button-primary {
+    background: rgba(var(--bs-primary-rgb), 0.1);
+    color: #3378ff;
+    border: none;
+    text-transform: capitalize;
+}
+
+.fc .fc-button-primary:focus, .fc .fc-button-primary:not(:disabled).fc-button-active:focus, .fc .fc-button-primary:not(:disabled):active:focus {
+    box-shadow: none;
+}
+
+.fc .fc-button-primary:disabled {
+    background: rgba(var(--bs-primary-rgb), 0.1);
+    color: #3378ff;
+    border: none;
+    text-transform: capitalize;
+}
+
+.fc .fc-button-primary:not(:disabled):focus {
+    color: #fff;
+    background-color: #3378ff;
+    border-color: #fff;
+}
+.fc .fc-button-primary:not(:disabled):hover{
+    background: #3378ff;
+}

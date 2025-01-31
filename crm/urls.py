@@ -27,7 +27,9 @@ urlpatterns = [
 
     # task
     path('tasks/', TaskView, name='tasks'),
-    # path('order-add/', OrderAddView, name='order-add'),
+    # calendar
+    path('calendar/', calendar_view, name='calendar'),
+    path('api/events/', get_events, name='get-events'),
     # path('order/<slug>/', OrderUpdateView, name='order-update'),
 
     # #     path('sertler-qaydalar', views.PrivacyView, name='privacy'),

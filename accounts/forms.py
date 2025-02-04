@@ -129,6 +129,7 @@ class CompanyRegistrForm(forms.ModelForm):
         self.fields['name'].label = "Company name"
         self.fields['tax_id'].label = "Tax ID"
 
+
 # class EditProfileForm(forms.ModelForm):
 #     class Meta:
 #         model = MyUser
@@ -139,3 +140,64 @@ class CompanyRegistrForm(forms.ModelForm):
 #             'phone_number',
 #             'adress',
 #         )
+
+
+class CompanyEditForm(forms.ModelForm):
+    class Meta:
+        model = Company
+        fields = (
+            'name',
+            'tax_id',
+            'company_logo',
+            'email',
+            'phone_number',
+            'address',
+            'website',
+        )
+
+    name = forms.CharField(max_length=100, label='', widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'autofocus': '',
+        'placeholder': _('Company name'),
+    }))
+
+    tax_id = forms.CharField(max_length=100, label='', widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'autofocus': '',
+        'placeholder': _('Tax ID'),
+    }))
+
+    company_logo = forms.ImageField(max_length=100, label='', widget=forms.FileInput(attrs={
+        'class': 'form-control',
+        'placeholder': _('Company logo'),
+    }))
+
+    email = forms.EmailField(max_length=100, label='', widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': _('Email'),
+    }))
+
+    phone_number = forms.CharField(max_length=100, label='', widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': _('Phone number'),
+    }))
+
+    address = forms.CharField(max_length=255, label='', widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': _('Address'),
+    }))
+
+    website = forms.URLField(max_length=200, label='', widget=forms.URLInput(attrs={
+        'class': 'form-control',
+        'placeholder': _('Website'),
+    }))
+
+    def __init__(self, *args, **kwargs):
+        super(CompanyEditForm, self).__init__(*args, **kwargs)
+        self.fields['name'].label = "Company name"
+        self.fields['tax_id'].label = "Tax ID"
+        self.fields['company_logo'].label = "Company logo"
+        self.fields['email'].label = "Email"
+        self.fields['phone_number'].label = "Phone number"
+        self.fields['address'].label = "Address"
+        self.fields['website'].label = "Website"

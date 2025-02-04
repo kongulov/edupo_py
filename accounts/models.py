@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.db import models
-from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -15,8 +14,14 @@ USER_MODEL = settings.AUTH_USER_MODEL
 
 
 class Company(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,related_name="company_owner")
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,
+                              related_name="company_owner")
     name = models.CharField(max_length=1500, verbose_name="Company name")
+    company_logo = models.ImageField(verbose_name=_('Company logo'), upload_to='companies', null=True, blank=True)
+    address = models.CharField(max_length=1500, verbose_name="Company address", null=True)
+    email = models.EmailField(verbose_name=_('Email'), null=True)
+    phone_number = models.CharField(max_length=12000, verbose_name="Phone number", null=True)
+    website = models.CharField(max_length=1200, verbose_name="Website", null=True, blank=True)
     package_company = models.IntegerField(
         choices=PACKAGES, verbose_name="Company Package", null=True, blank=True)
     tax_id = models.CharField(max_length=1200, verbose_name="Tax id")
@@ -72,7 +77,6 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return u'%s %s' % (self.first_name, self.last_name)
 
-
     def save(self, *args, **kwargs):
         super(MyUser, self).save(*args, **kwargs)
         self.slug = "{}.{}".format(slugify(self.first_name + "-" + self.last_name), self.id)
@@ -87,5 +91,3 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
             return self.user_image.url
         else:
             return "/static/assets/m-student.png"
-
-

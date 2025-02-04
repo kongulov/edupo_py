@@ -32,6 +32,9 @@ urlpatterns = [
     path('api/events/', get_events, name='get-events'),
     # path('order/<slug>/', OrderUpdateView, name='order-update'),
 
+    # settings
+
+    path('settings/company-profile/', CompanyProfileUpdateView, name='company-profile'),
     # #     path('sertler-qaydalar', views.PrivacyView, name='privacy'),
     # #     path('istifadeci-huquqlari', views.UserRightsView, name='userrights'),
     # path('elaqe', ContactView, name='contact'),

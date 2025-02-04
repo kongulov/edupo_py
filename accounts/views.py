@@ -56,3 +56,4 @@ def signup_view(request):
     context['form'] = form
     context['co_form'] = co_form
     return render(request, 'useractions/registration.html', context)
+

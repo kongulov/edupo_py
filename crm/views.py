@@ -5,8 +5,10 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Max, Count, Subquery, OuterRef
 from django.db.models.functions import TruncDate
 from django.http import JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render, redirect
 
+from accounts.forms import CompanyEditForm
 from crm.forms import *
 from crm.models import *
 
@@ -302,7 +304,32 @@ def get_events(request):
             "title": event.title,
             "start": event.start_datetime.strftime("%Y-%m-%dT%H:%M:%S"),
             "end": event.end_datetime.strftime("%Y-%m-%dT%H:%M:%S"),
+            "description": event.content,
             "color": event.color
         } for event in events
     ]
     return JsonResponse(events_list, safe=False)
+
+
+# end calendar view
+
+# start company profile
+
+
+@login_required(login_url='/sign-in/')
+def CompanyProfileUpdateView(request):
+    context = {}
+
+    obj = request.user.company
+    context['obj'] = obj
+
+    if request.method == 'POST':
+        form = CompanyEditForm(request.POST, request.FILES, instance=obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'The company profile information has been successfully updated.')
+            return redirect('crm:company-profile')
+    else:
+        form = CompanyEditForm(instance=obj)
+    context['form'] = form
+    return render(request, 'settings/company-profile.html', context)

@@ -1,0 +1,166 @@
+{% extends 'base/base.html' %}
+{% load static i18n %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+    <div class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 mb-1">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+                                 aria-label="breadcrumb">
+                                <ol class="breadcrumb p-0 mb-2">
+                                    <li class="breadcrumb-item"><a href="#">Settings</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Company profile</li>
+                                </ol>
+                            </nav>
+                        </div>
+
+                    </div>
+                    {% if messages %}
+
+                        <div class="m-lg-3">
+                        <div class="messages" style="list-style: none;text-align: center;">
+                            {% for message in messages %}
+                                <div class="alert alert-success" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error|escape }}
+                                </div><br>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ error|escape }}
+                            </div><br>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+                <div class="col-lg-12 mb-3 d-flex justify-content-between">
+                    <h4 class="fw-bold d-flex align-items-center">Edit Company Profile</h4>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post" enctype="multipart/form-data" class="row">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <!-- Company Name -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_name" class="requiredField">
+                                                Company name <span class="asteriskField">*</span>
+                                            </label>
+                                            <input type="text" name="name" value="{{ form.name.value }}"
+                                                   class="form-control textinput textInput" autofocus
+                                                   placeholder="Company name" maxlength="100" required id="id_name">
+                                        </div>
+                                    </div>
+
+                                    <!-- Tax ID -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_tax_id" class="requiredField">
+                                                Tax ID <span class="asteriskField">*</span>
+                                            </label>
+                                            <input type="text" name="tax_id" value="{{ form.tax_id.value }}"
+                                                   class="form-control textinput textInput" placeholder="Tax ID"
+                                                   maxlength="100" required id="id_tax_id">
+                                        </div>
+                                    </div>
+
+                                    <!-- Company Logo -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_company_logo" class="requiredField">
+                                                Company logo <span class="asteriskField">*</span>
+                                            </label>
+                                            <div class="mb-3">
+                                                {% if form.instance.company_logo %}
+                                                    <div class="mb-2">
+                                                        <img src="{{ form.instance.company_logo.url }}"
+                                                             alt="Company Logo" class="img-fluid" width="100"
+                                                             height="100">
+                                                    </div>
+                                                {% endif %}
+                                                <input type="file" name="company_logo" class="form-control"
+                                                       id="id_company_logo" accept="image/*">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Email -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_email" class="requiredField">
+                                                Email <span class="asteriskField">*</span>
+                                            </label>
+                                            <input type="email" name="email" value="{{ form.email.value }}"
+                                                   class="form-control emailinput" placeholder="Email" maxlength="100"
+                                                   required id="id_email">
+                                        </div>
+                                    </div>
+
+                                    <!-- Phone Number -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_phone_number" class="requiredField">
+                                                Phone number <span class="asteriskField">*</span>
+                                            </label>
+                                            <input type="text" name="phone_number" value="{{ form.phone_number.value }}"
+                                                   class="form-control textinput textInput" placeholder="Phone number"
+                                                   maxlength="100" required id="id_phone_number">
+                                        </div>
+                                    </div>
+
+                                    <!-- Address -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_address" class="requiredField">
+                                                Address <span class="asteriskField">*</span>
+                                            </label>
+                                            <input type="text" name="address" value="{{ form.address.value }}"
+                                                   class="form-control textinput textInput" placeholder="Address"
+                                                   maxlength="255" required id="id_address">
+                                        </div>
+                                    </div>
+
+                                    <!-- Website -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="id_website" class="requiredField">
+                                                Website <span class="asteriskField">*</span>
+                                            </label>
+                                            <input type="url" name="website" value="{{ form.website.value }}"
+                                                   class="form-control urlinput" placeholder="Website" maxlength="200"
+                                                   required id="id_website">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-end mt-3 gap-2">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -20,39 +20,73 @@
 }
 
 .task_type_call {
-    background: #38bf02;
-    border-color: #38bf02;
+    background: #00B050;
+    border-color: #00B050;
     font-size: 13px;
     font-weight: bold;
 }
 
 .task_type_personal {
-    background: #3378ff;
-    border-color: #3378ff !important;
+    background: #0909FF;
+    border-color: #0909FF !important;
     font-size: 13px;
     font-weight: bold;
 }
 
 .task_type_message {
-    background-color: #dbd406;
+    border-color: #33CAFF;
+    background: #33CAFF;
     font-size: 13px;
     font-weight: bold;
 }
 
 .task_type_email {
-    background: #f2ac4f;
+    background: #FFA600;
+    border-color: #FFA600 !important;
     font-size: 13px;
     font-weight: bold;
 
 }
 
 .status_todo {
-    background: #38bf02;
-    border-color: #38bf02;
+    background: #FF0080;
+    border-color: #FF0080;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.status_inprogress {
+    background: #FFD732;
+    border-color: #FFD732;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.status_done {
+    background: #22CE83;
+    border-color: #22CE83;
     font-size: 13px;
     font-weight: bold;
 }
 
 .task-status-bar {
     display: flex;
+}
+
+.list-item .draggable-item.border-color-left-red, .board-item .draggable-item.border-color-left-red {
+    color: #FF0080 !important;
+}
+
+.border-color-left-green {
+    color: #22CE83 !important;
+}
+
+.border-color-left-blue {
+    color: #FFD732 !important;
+}
+
+.task-deadline {
+    color: black;
+    font-size: 14px;
+    font-family: sans-serif;
 }

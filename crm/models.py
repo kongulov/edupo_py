@@ -186,6 +186,7 @@ class Task(models.Model):
     deadline = models.DateTimeField(verbose_name=_('Due Date'))
     priority = models.IntegerField(choices=PRIORITY_LEVEL, verbose_name=_('Priority'))
     status = models.IntegerField(choices=TASK_STATUS, verbose_name=_('Task Status'))
+    set_today = models.BooleanField(default=False, verbose_name=_('Set Today'))
     slug = models.SlugField(max_length=150, unique=True, verbose_name=_('Slug'), null=True, editable=False)
 
     def __str__(self):

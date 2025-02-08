@@ -1,0 +1,644 @@
+{% load static i18n %}
+<div id="board-content" class="animate__animated animate__fadeIn active"
+     data-toggle-extra="tab-content">
+    <div class="board-content">
+        <div class="board-item">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="item-title">TODAY</h5>
+                </div>
+            </div>
+            <div class="board-scrollbar board-scrollbar-0">
+                {% for obj in today_task_list %}
+                    <div id="draggable-item-{{ forloop.counter }}">
+                        <div class="draggable-item todo-board-card {{ obj.border_class }}">
+                            <div class="item-body">
+                                <div>
+                                    <h5>{{ obj.title }}</h5>
+                                    <p class="text-ellipsis short-1 mb-0 mt-1">
+                                    <div class="task-status-bar">
+                                        {% if obj.task_type == 1 %}
+                                            <div class="task-type task_type_personal"><i
+                                                    class="fas fa-user"></i> Personal
+                                            </div>
+                                        {% elif obj.task_type == 2 %}
+                                            <div class="task-type task_type_call"><i
+                                                    class="fas fa-phone"></i> Call
+                                            </div>
+                                        {% elif obj.task_type == 3 %}
+                                            <div class="task-type task_type_message"><i
+                                                    class="fas fa-envelope"></i> Message
+                                            </div>
+                                        {% elif obj.task_type == 4 %}
+                                            <div class="task-type task_type_email"><i
+                                                    class="fas fa-mail-bulk"></i> Email
+                                            </div>
+                                        {% endif %}
+                                        <div class="status-bar-extra">
+                                            {% if obj.status == 1 %}
+                                                <div class="task-status status_todo">
+                                                    {{ obj.get_status_display }}
+                                                </div>
+                                            {% elif obj.status == 2 %}
+
+                                                <div class="task-status status_inprogress">
+                                                    {{ obj.get_status_display }}
+                                                </div>
+                                            {% elif obj.status == 3 %}
+
+                                                <div class="task-status status_done">
+                                                    {{ obj.get_status_display }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+
+
+                                    </div>
+
+
+                                    </p>
+                                </div>
+                                <div style="text-align: right">
+                                    <div class="rounded">
+                                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                           title="{{ obj.author.get_full_name }}">
+                                            <svg width="20" xmlns="http://www.w3.org/2000/svg"
+                                                 fill="none" viewBox="0 0 24 24"
+                                                 stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      stroke-width="2"
+                                                      d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="task-deadline">
+                                        {{ obj.deadline|date:"j F Y" }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-footer iq-footer-dropdown">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex">
+
+                                        <div class="pe-3">
+                                            <a href="{% url 'crm:task_set_priority' obj.slug %}" class="text-primary"
+                                               data-bs-toggle="tooltip"
+                                               data-bs-placement="top"
+                                               title="{% trans 'Set Pinned' %}">
+                                                {% if obj.set_today %}
+                                                    <i class="fas fa-bookmark"></i>
+                                                {% else %}
+                                                    <i class="far fa-bookmark"></i>
+                                                {% endif %}
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="">
+                                        <div class="dropdown dropup">
+                                            <a href="#" class="text-primary pl-3"
+                                               id="dropdownMenuButton-1" data-bs-toggle="dropdown"
+                                               aria-haspopup="true" aria-expanded="false">
+                                                <svg class="svg-icon" width="18"
+                                                     xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                     viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round"
+                                                          stroke-linejoin="round"
+                                                          stroke-width="2"
+                                                          d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/>
+                                                </svg>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end"
+                                                 aria-labelledby="dropdownMenuButton-1">
+                                                <a class="dropdown-item" href="#">
+                                                    <svg class="svg-icon text-primary" width="20"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         fill="none" viewBox="0 0 24 24"
+                                                         stroke="currentColor">
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                                    </svg>
+                                                    Edit
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <svg class="svg-icon text-primary" width="20"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         fill="none" viewBox="0 0 24 24"
+                                                         stroke="currentColor">
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                    </svg>
+                                                    View
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <svg class="svg-icon text-primary" width="20"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         fill="none" viewBox="0 0 24 24"
+                                                         stroke="currentColor">
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                    </svg>
+                                                    Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+        <div class="board-item">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="item-title">Tomorrow</h5>
+                </div>
+            </div>
+            <div class="board-scrollbar board-scrollbar-1">
+                {% for obj in tomorrow_task_list %}
+                    <div id="draggable-item-{{ forloop.counter }}">
+                        <div class="draggable-item todo-board-card {{ obj.border_class }}">
+                            <div class="item-body">
+                                <div>
+                                    <h5>{{ obj.title }}</h5>
+                                    <p class="text-ellipsis short-1 mb-0 mt-1">
+                                    <div class="task-status-bar">
+                                        {% if obj.task_type == 1 %}
+                                            <div class="task-type task_type_personal"><i
+                                                    class="fas fa-user"></i> Personal
+                                            </div>
+                                        {% elif obj.task_type == 2 %}
+                                            <div class="task-type task_type_call"><i
+                                                    class="fas fa-phone"></i> Call
+                                            </div>
+                                        {% elif obj.task_type == 3 %}
+                                            <div class="task-type task_type_message"><i
+                                                    class="fas fa-envelope"></i> Message
+                                            </div>
+                                        {% elif obj.task_type == 4 %}
+                                            <div class="task-type task_type_email"><i
+                                                    class="fas fa-mail-bulk"></i> Email
+                                            </div>
+                                        {% endif %}
+                                        <div class="status-bar-extra">
+                                            {% if obj.status == 1 %}
+                                                <div class="task-status status_todo">
+                                                    {{ obj.get_status_display }}
+                                                </div>
+                                            {% elif obj.status == 2 %}
+
+                                                <div class="task-status status_inprogress">
+                                                    {{ obj.get_status_display }}
+                                                </div>
+                                            {% elif obj.status == 3 %}
+
+                                                <div class="task-status status_done">
+                                                    {{ obj.get_status_display }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+
+
+                                    </div>
+
+
+                                    </p>
+                                </div>
+                                <div style="text-align: right">
+                                    <div class="rounded">
+                                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                           title="{{ obj.author.get_full_name }}">
+                                            <svg width="20" xmlns="http://www.w3.org/2000/svg"
+                                                 fill="none" viewBox="0 0 24 24"
+                                                 stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      stroke-width="2"
+                                                      d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="task-deadline">
+                                        {{ obj.deadline|date:"j F Y" }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-footer iq-footer-dropdown">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex">
+
+                                        <div class="pe-3">
+                                            <a href="{% url 'crm:task_set_priority' obj.slug %}" class="text-primary"
+                                               data-bs-toggle="tooltip"
+                                               data-bs-placement="top"
+                                               title="{% trans 'Set Pinned' %}">
+                                                {% if obj.set_today %}
+                                                    <i class="fas fa-bookmark"></i>
+                                                {% else %}
+                                                    <i class="far fa-bookmark"></i>
+                                                {% endif %}
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="">
+                                        <div class="dropdown dropup">
+                                            <a href="#" class="text-primary pl-3"
+                                               id="dropdownMenuButton-1" data-bs-toggle="dropdown"
+                                               aria-haspopup="true" aria-expanded="false">
+                                                <svg class="svg-icon" width="18"
+                                                     xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                     viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round"
+                                                          stroke-linejoin="round"
+                                                          stroke-width="2"
+                                                          d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/>
+                                                </svg>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end"
+                                                 aria-labelledby="dropdownMenuButton-1">
+                                                <a class="dropdown-item" href="#">
+                                                    <svg class="svg-icon text-primary" width="20"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         fill="none" viewBox="0 0 24 24"
+                                                         stroke="currentColor">
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                                    </svg>
+                                                    Edit
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <svg class="svg-icon text-primary" width="20"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         fill="none" viewBox="0 0 24 24"
+                                                         stroke="currentColor">
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                    </svg>
+                                                    View
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <svg class="svg-icon text-primary" width="20"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         fill="none" viewBox="0 0 24 24"
+                                                         stroke="currentColor">
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                    </svg>
+                                                    Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="board-item">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="item-title">UpComing</h5>
+                </div>
+            </div>
+            <div class="board-scrollbar board-scrollbar-3">
+                {% for obj in upcoming_task_list %}
+                    <div id="draggable-item-{{ forloop.counter }}">
+                        <div class="draggable-item todo-board-card {{ obj.border_class }}">
+                            <div class="item-body">
+                                <div>
+                                    <h5>{{ obj.title }}</h5>
+                                    <p class="text-ellipsis short-1 mb-0 mt-1">
+                                    <div class="task-status-bar">
+                                        {% if obj.task_type == 1 %}
+                                            <div class="task-type task_type_personal"><i
+                                                    class="fas fa-user"></i> Personal
+                                            </div>
+                                        {% elif obj.task_type == 2 %}
+                                            <div class="task-type task_type_call"><i
+                                                    class="fas fa-phone"></i> Call
+                                            </div>
+                                        {% elif obj.task_type == 3 %}
+                                            <div class="task-type task_type_message"><i
+                                                    class="fas fa-envelope"></i> Message
+                                            </div>
+                                        {% elif obj.task_type == 4 %}
+                                            <div class="task-type task_type_email"><i
+                                                    class="fas fa-mail-bulk"></i> Email
+                                            </div>
+                                        {% endif %}
+                                        <div class="status-bar-extra">
+                                            {% if obj.status == 1 %}
+                                                <div class="task-status status_todo">
+                                                    {{ obj.get_status_display }}
+                                                </div>
+                                            {% elif obj.status == 2 %}
+
+                                                <div class="task-status status_inprogress">
+                                                    {{ obj.get_status_display }}
+                                                </div>
+                                            {% elif obj.status == 3 %}
+
+                                                <div class="task-status status_done">
+                                                    {{ obj.get_status_display }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+
+
+                                    </div>
+
+
+                                    </p>
+                                </div>
+                                <div style="text-align: right">
+                                    <div class="rounded">
+                                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                           title="{{ obj.author.get_full_name }}">
+                                            <svg width="20" xmlns="http://www.w3.org/2000/svg"
+                                                 fill="none" viewBox="0 0 24 24"
+                                                 stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      stroke-width="2"
+                                                      d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="task-deadline">
+                                        {{ obj.deadline|date:"j F Y" }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-footer iq-footer-dropdown">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex">
+
+                                        <div class="pe-3">
+                                            <a href="{% url 'crm:task_set_priority' obj.slug %}" class="text-primary"
+                                               data-bs-toggle="tooltip"
+                                               data-bs-placement="top"
+                                               title="{% trans 'Set Pinned' %}">
+                                                {% if obj.set_today %}
+                                                    <i class="fas fa-bookmark"></i>
+                                                {% else %}
+                                                    <i class="far fa-bookmark"></i>
+                                                {% endif %}
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="">
+                                        <div class="dropdown dropup">
+                                            <a href="#" class="text-primary pl-3"
+                                               id="dropdownMenuButton-1" data-bs-toggle="dropdown"
+                                               aria-haspopup="true" aria-expanded="false">
+                                                <svg class="svg-icon" width="18"
+                                                     xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                     viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round"
+                                                          stroke-linejoin="round"
+                                                          stroke-width="2"
+                                                          d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/>
+                                                </svg>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end"
+                                                 aria-labelledby="dropdownMenuButton-1">
+                                                <a class="dropdown-item" href="#">
+                                                    <svg class="svg-icon text-primary" width="20"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         fill="none" viewBox="0 0 24 24"
+                                                         stroke="currentColor">
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                                    </svg>
+                                                    Edit
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <svg class="svg-icon text-primary" width="20"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         fill="none" viewBox="0 0 24 24"
+                                                         stroke="currentColor">
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                    </svg>
+                                                    View
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <svg class="svg-icon text-primary" width="20"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         fill="none" viewBox="0 0 24 24"
+                                                         stroke="currentColor">
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                    </svg>
+                                                    Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="board-item">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="item-title">Overdue</h5>
+                </div>
+            </div>
+            <div class="board-scrollbar board-scrollbar-2">
+                {% for obj in overdue_task_list %}
+                    <div id="draggable-item-{{ forloop.counter }}">
+                        <div class="draggable-item todo-board-card {{ obj.border_class }}">
+                            <div class="item-body">
+                                <div>
+                                    <h5>{{ obj.title }}</h5>
+                                    <p class="text-ellipsis short-1 mb-0 mt-1">
+                                    <div class="task-status-bar">
+                                        {% if obj.task_type == 1 %}
+                                            <div class="task-type task_type_personal"><i
+                                                    class="fas fa-user"></i> Personal
+                                            </div>
+                                        {% elif obj.task_type == 2 %}
+                                            <div class="task-type task_type_call"><i
+                                                    class="fas fa-phone"></i> Call
+                                            </div>
+                                        {% elif obj.task_type == 3 %}
+                                            <div class="task-type task_type_message"><i
+                                                    class="fas fa-envelope"></i> Message
+                                            </div>
+                                        {% elif obj.task_type == 4 %}
+                                            <div class="task-type task_type_email"><i
+                                                    class="fas fa-mail-bulk"></i> Email
+                                            </div>
+                                        {% endif %}
+                                        <div class="status-bar-extra">
+                                            {% if obj.status == 1 %}
+                                                <div class="task-status status_todo">
+                                                    {{ obj.get_status_display }}
+                                                </div>
+                                            {% elif obj.status == 2 %}
+
+                                                <div class="task-status status_inprogress">
+                                                    {{ obj.get_status_display }}
+                                                </div>
+                                            {% elif obj.status == 3 %}
+
+                                                <div class="task-status status_done">
+                                                    {{ obj.get_status_display }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+
+
+                                    </div>
+
+
+                                    </p>
+                                </div>
+                                <div style="text-align: right">
+                                    <div class="rounded">
+                                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                           title="{{ obj.author.get_full_name }}">
+                                            <svg width="20" xmlns="http://www.w3.org/2000/svg"
+                                                 fill="none" viewBox="0 0 24 24"
+                                                 stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      stroke-width="2"
+                                                      d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="task-deadline">
+                                        {{ obj.deadline|date:"j F Y" }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-footer iq-footer-dropdown">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex">
+
+                                        <div class="pe-3">
+                                            <a href="{% url 'crm:task_set_priority' obj.slug %}" class="text-primary"
+                                               data-bs-toggle="tooltip"
+                                               data-bs-placement="top"
+                                               title="{% trans 'Set Pinned' %}">
+                                                {% if obj.set_today %}
+                                                    <i class="fas fa-bookmark"></i>
+                                                {% else %}
+                                                    <i class="far fa-bookmark"></i>
+                                                {% endif %}
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="">
+                                        <div class="dropdown dropup">
+                                            <a href="#" class="text-primary pl-3"
+                                               id="dropdownMenuButton-1" data-bs-toggle="dropdown"
+                                               aria-haspopup="true" aria-expanded="false">
+                                                <svg class="svg-icon" width="18"
+                                                     xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                     viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round"
+                                                          stroke-linejoin="round"
+                                                          stroke-width="2"
+                                                          d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/>
+                                                </svg>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end"
+                                                 aria-labelledby="dropdownMenuButton-1">
+                                                <a class="dropdown-item" href="#">
+                                                    <svg class="svg-icon text-primary" width="20"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         fill="none" viewBox="0 0 24 24"
+                                                         stroke="currentColor">
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                                    </svg>
+                                                    Edit
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <svg class="svg-icon text-primary" width="20"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         fill="none" viewBox="0 0 24 24"
+                                                         stroke="currentColor">
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                    </svg>
+                                                    View
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <svg class="svg-icon text-primary" width="20"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         fill="none" viewBox="0 0 24 24"
+                                                         stroke="currentColor">
+                                                        <path stroke-linecap="round"
+                                                              stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                    </svg>
+                                                    Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,7 +2,7 @@ import datetime
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Max, Count, Subquery, OuterRef
+from django.db.models import Max, Count, Subquery, OuterRef, Q
 from django.db.models.functions import TruncDate
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
@@ -276,20 +276,46 @@ def TaskView(request):
     today = datetime.date.today()
     tomorrow = today + datetime.timedelta(days=1)
     two_days_later = today + datetime.timedelta(days=2)
-    context['today_task_list'] = Task.objects.annotate(deadline_date=TruncDate('deadline')).filter(
-        author=request.user, deadline_date=today
-    )
-    context['tomorrow_task_list'] = Task.objects.annotate(deadline_date=TruncDate('deadline')).filter(
-        author=request.user, deadline_date=tomorrow
-    )
 
-    context['upcoming_task_list'] = Task.objects.annotate(deadline_date=TruncDate('deadline')).filter(
-        author=request.user, deadline_date__gte=two_days_later
-    )
-    context['overdue_task_list'] = Task.objects.annotate(deadline_date=TruncDate('deadline')).filter(
-        author=request.user, deadline_date__lt=today
-    )
+    task_lists = {
+        'today_task_list': Task.objects.annotate(deadline_date=TruncDate('deadline')).filter(
+            Q(author=request.user, deadline_date=today) | Q(set_today=True)
+        ).order_by('-set_today', '-created_date'),
+        'tomorrow_task_list': Task.objects.annotate(deadline_date=TruncDate('deadline')).filter(
+            author=request.user, deadline_date=tomorrow, set_today=False
+        ),
+        'upcoming_task_list': Task.objects.annotate(deadline_date=TruncDate('deadline')).filter(
+            author=request.user, deadline_date__gte=two_days_later, set_today=False
+        ),
+        'overdue_task_list': Task.objects.annotate(deadline_date=TruncDate('deadline')).filter(
+            author=request.user, deadline_date__lt=today, set_today=False
+        )
+    }
+
+    for key, task_list in task_lists.items():
+        for task in task_list:
+            if task.priority == 1:
+                task.border_class = 'border-color-left-red'
+            elif task.priority == 2:
+                task.border_class = 'border-color-left-blue'
+            else:
+                task.border_class = 'border-color-left-green'
+
+    context['today_task_list'] = task_lists['today_task_list']
+    context['tomorrow_task_list'] = task_lists['tomorrow_task_list']
+    context['upcoming_task_list'] = task_lists['upcoming_task_list']
+    context['overdue_task_list'] = task_lists['overdue_task_list']
+
     return render(request, 'crm/task/task-list.html', context)
+
+
+@login_required(login_url='/sign-in/')
+def task_set_priority(request, slug):
+    obj = get_object_or_404(Task, slug=slug)
+    obj.set_today = not obj.set_today
+    obj.save()
+
+    return redirect('crm:tasks')
 
 
 # start calendar view#

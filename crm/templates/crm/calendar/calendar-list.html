@@ -10,7 +10,7 @@
     <style>
         /* Bugünkü günü mavi kenarlıklı yap */
         .fc-day-today {
-            border: 3px solid blue !important;
+            border: 2px solid #3292e4 !important;
             background-color: transparent !important; /* Sarı arka planı kaldır */
         }
     </style>
@@ -96,7 +96,7 @@
                                                     let cellDate = info.date.toISOString().split('T')[0];
 
                                                     if (cellDate === today) {
-                                                        info.el.style.border = "3px solid blue";
+                                                        info.el.style.border = "2px solid #3292e4";
                                                     }
                                                 },
 

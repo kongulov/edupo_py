@@ -235,4 +235,44 @@ class OrderUpdateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control col-md-6'})
+
+
 # end Order forms
+
+
+# calendar event
+
+from django import forms
+from .models import CalendarEvent
+
+
+class CalendarEventAddForm(forms.ModelForm):
+    class Meta:
+        model = CalendarEvent
+        fields = [
+            'title',
+            'content',
+            'event_type',
+            'location',
+            'attendees',
+            'start_datetime',
+            'end_datetime',
+            'color',
+        ]
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'content': forms.Textarea(attrs={'class': 'form-control'}),
+            'event_type': forms.Select(attrs={'class': 'form-control'}),
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'attendees': forms.EmailInput(attrs={'class': 'form-control'}),
+            'start_datetime': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'end_datetime': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'color': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+
+# end calendar event

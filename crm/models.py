@@ -212,17 +212,35 @@ class Task(models.Model):
 
 
 class CalendarEvent(models.Model):
-    COLOR_CHOICES = [
-        ('#007bff', 'Blue'),  # Primary
-        ('#28a745', 'Green'),  # Success
-        ('#dc3545', 'Red'),  # Danger
-    ]
+    COLOR_CHOICES = (
+        ('#007bff', 'Blue'),
+        ('#28a745', 'Green'),
+        ('#dc3545', 'Red'),
+        ('#ffc107', 'Yellow'),
+        ('#17a2b8', 'Cyan'),
+        ('#6f42c1', 'Purple'),
+        ('#fd7e14', 'Orange'),
+        ('#e83e8c', 'Pink'),
+        ('#20c997', 'Teal'),
+        ('#343a40', 'Dark'),
+        ('#6c757d', 'Gray'),
+    )
 
+    company = models.ForeignKey(Company, verbose_name=_('Task Company'), on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(MyUser, verbose_name=_('Task Author'), on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True, null=True)
+    event_type = models.CharField(max_length=10, choices=Event_Type, verbose_name=_('Event Type'),null=True)
+    location = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Location'))
+    attendees = models.EmailField(blank=True, null=True, verbose_name=_('Attendees email'))
     start_datetime = models.DateTimeField()
     end_datetime = models.DateTimeField()
-    color = models.CharField(max_length=10, choices=COLOR_CHOICES, default='#007bff')
+    color = models.CharField(max_length=10, choices=COLOR_CHOICES, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.color:
+            self.color = random.choice([color[0] for color in self.COLOR_CHOICES])
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

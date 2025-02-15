@@ -1,18 +1,25 @@
 {% extends 'base/base.html' %}
 {% load static i18n %}
-{% block calendar_css %}
+{% load crispy_forms_tags %}
 
+{% block calendar_css %}
     <!-- FullCalendar CSS -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
     <link href="{% static 'assets/css/custom-calendar.css' %}" rel="stylesheet">
 
+    <style>
+        /* Bugünkü günü mavi kenarlıklı yap */
+        .fc-day-today {
+            border: 3px solid blue !important;
+            background-color: transparent !important; /* Sarı arka planı kaldır */
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
     <div class="content-page">
         <div class="container-fluid">
             <div class="row">
-
                 <div class="col-lg-12">
                     <div class="d-flex flex-wrap align-items-center justify-content-between my-schedule mb-4">
                         <div class="d-flex align-items-center justify-content-between mb-md-0 mb-2">
@@ -37,7 +44,6 @@
                         <div class="col-lg-12">
                             <div class="card card-block card-stretch">
                                 <div class="card-body">
-
                                     <div class="container mt-4">
                                         <div id="calendar"></div>
                                     </div>
@@ -56,13 +62,11 @@
                                                     <p><strong>Title:</strong> <span id="eventTitle"></span></p>
                                                     <p><strong>Start:</strong> <span id="eventStart"></span></p>
                                                     <p><strong>End:</strong> <span id="eventEnd"></span></p>
-                                                    <p><strong>Description:</strong> <span id="eventDescription"></span>
-                                                    </p>
+                                                    <p><strong>Description:</strong> <span id="eventDescription"></span></p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Close
-                                                    </button>
+                                                            data-bs-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -80,15 +84,23 @@
                                                     center: 'title',
                                                     right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
                                                 },
-                                                events: '/api/events/',  // Django API çağırışı
+                                                events: '/api/events/',
                                                 eventTimeFormat: {
                                                     hour: '2-digit',
                                                     minute: '2-digit',
-                                                    hour12: false // 24 saatlik format için
+                                                    hour12: false
+                                                },
+
+                                                dayCellDidMount: function (info) {
+                                                    let today = new Date().toISOString().split('T')[0];
+                                                    let cellDate = info.date.toISOString().split('T')[0];
+
+                                                    if (cellDate === today) {
+                                                        info.el.style.border = "3px solid blue";
+                                                    }
                                                 },
 
                                                 eventClick: function (info) {
-                                                    // Tarih ve saat formatını düzeltme
                                                     let start = new Date(info.event.start).toLocaleString('tr-TR', {
                                                         year: 'numeric', month: '2-digit', day: '2-digit',
                                                         hour: '2-digit', minute: '2-digit', second: '2-digit',
@@ -106,7 +118,6 @@
                                                     document.getElementById('eventEnd').textContent = end;
                                                     document.getElementById('eventDescription').textContent = info.event.extendedProps.description || 'No description';
 
-                                                    // Bootstrap modalı aç
                                                     var eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
                                                     eventModal.show();
                                                 }
@@ -114,7 +125,6 @@
 
                                             calendar.render();
                                         });
-
                                     </script>
 
                                 </div>
@@ -124,12 +134,48 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add New Event</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label">Event Title</label>
+                                <input type="text" class="form-control" id="eventTitleInput" placeholder="Enter Event Title">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Event Type</label>
+                                <select class="form-select" id="eventTypeInput">
+                                    <option value="meeting">Meeting</option>
+                                    <option value="appointment">Appointment</option>
+                                    <option value="birthday">Birthday</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Start Date</label>
+                                <input type="datetime-local" class="form-control" id="startDateInput">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">End Date</label>
+                                <input type="datetime-local" class="form-control" id="endDateInput">
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-primary">Add Event</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
 {% block calendar_js %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/locales/tr.min.js"></script>
-    <!-- FullCalendar JS -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 {% endblock %}

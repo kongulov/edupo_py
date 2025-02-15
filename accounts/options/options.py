@@ -170,3 +170,10 @@ TASK_STATUS = (
     (2, _("In Progress")),
     (3, _("Done")),
 )
+
+
+Event_Type = (
+    (1, 'Meeting'),
+    (2, 'Appointment'),
+    (3, 'Event')
+)

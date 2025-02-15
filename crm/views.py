@@ -305,7 +305,6 @@ def TaskView(request):
     context['tomorrow_task_list'] = task_lists['tomorrow_task_list']
     context['upcoming_task_list'] = task_lists['upcoming_task_list']
     context['overdue_task_list'] = task_lists['overdue_task_list']
-
     return render(request, 'crm/task/task-list.html', context)
 
 
@@ -320,7 +319,21 @@ def task_set_priority(request, slug):
 
 # start calendar view#
 def calendar_view(request):
-    return render(request, 'crm/calendar/calendar-list.html')
+    context = {}
+    if request.method == 'POST':
+        form = CalendarEventAddForm(request.POST)
+        if form.is_valid():
+            calendar = form.save(commit=False)
+            calendar.company = request.user.company
+            calendar.author = request.user
+            calendar.save()
+            messages.success(request,
+                             'The new event has been successfully added.')
+            return redirect('crm:calendar')
+    else:
+        form = CalendarEventAddForm()
+    context['form'] = form
+    return render(request, 'crm/calendar/calendar-list.html', context)
 
 
 def get_events(request):

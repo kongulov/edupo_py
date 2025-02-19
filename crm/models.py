@@ -1,4 +1,5 @@
 import random
+import uuid
 
 from django.utils.translation import gettext_lazy as _
 
@@ -230,7 +231,7 @@ class CalendarEvent(models.Model):
     author = models.ForeignKey(MyUser, verbose_name=_('Task Author'), on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True, null=True)
-    event_type = models.CharField(max_length=10, choices=Event_Type, verbose_name=_('Event Type'),null=True)
+    event_type = models.CharField(max_length=10, choices=Event_Type, verbose_name=_('Event Type'), null=True)
     location = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Location'))
     attendees = models.EmailField(blank=True, null=True, verbose_name=_('Attendees email'))
     start_datetime = models.DateTimeField()
@@ -249,3 +250,41 @@ class CalendarEvent(models.Model):
         verbose_name = _('Calendar')
         verbose_name_plural = _('Calendars')
         ordering = ['-id']
+
+
+class Notification(models.Model):
+    sender = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='sender', verbose_name='Sender')
+    receiver = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='receiver', verbose_name='Receiver')
+    type = models.IntegerField(choices=NotificationType, verbose_name='Type', null=True)
+    action_type = models.IntegerField(choices=NotificationActionType, verbose_name='Type', null=True)
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Date')
+    is_read = models.BooleanField(default=False, verbose_name='is Read')
+    slug = models.SlugField(max_length=200, unique=True, verbose_name="Slug", editable=False)
+
+    def __str__(self):
+        return self.slug
+
+    class Meta:
+        verbose_name = "Notification"
+        verbose_name_plural = "Notifications"
+        ordering = ('-created',)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = uuid.uuid4()
+        super(Notification, self).save(*args, **kwargs)
+
+
+class NotificationView(models.Model):
+    notification = models.ForeignKey(Notification, on_delete=models.CASCADE, related_name='viewnotification',
+                                     verbose_name="Notification")
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='viewuser', verbose_name="User")
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Date')
+
+    def __str__(self):
+        return ('%s') % (self.id)
+
+    class Meta:
+        verbose_name = "Notification view"
+        verbose_name_plural = "Notifications view"
+        ordering = ('-created',)

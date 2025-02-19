@@ -276,3 +276,50 @@ class CalendarEventAddForm(forms.ModelForm):
             field.widget.attrs.update({'class': 'form-control'})
 
 # end calendar event
+#task add form
+class TaskAddForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = [
+            'title',
+            'task_type',
+            'deadline',
+            'priority',
+            'status',
+        ]
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'task_type': forms.Select(attrs={'class': 'form-control'}),
+            'deadline': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'priority': forms.Select(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control col-md-6'})
+
+
+class TaskUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = [
+            'title',
+            'task_type',
+            'deadline',
+            'priority',
+            'status',
+        ]
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'task_type': forms.Select(attrs={'class': 'form-control'}),
+            'deadline': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'priority': forms.Select(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control col-md-6'})

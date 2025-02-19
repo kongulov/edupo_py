@@ -13,7 +13,13 @@
                                 <h4 class="card-title">Tasks</h4>
                             </div>
                             <div class="header-action">
+
                                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                    <a style="margin-right: 5px;" href="{% url 'crm:task-add' %}"
+                                       class="btn btn-primary">
+                                        <i class="fas fa-plus"></i>
+                                        Add Task
+                                    </a>
                                     <button type="button" class="btn btn-outline-primary active" data-toggle-extra="tab"
                                             data-target-extra="#board-content">Board
                                     </button>
@@ -21,10 +27,37 @@
                                             data-target-extra="#list-content">List
                                     </button>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
+                {% if messages %}
+
+                    <div class="m-lg-3">
+                    <div class="messages" style="list-style: none;text-align: center;">
+                        {% for message in messages %}
+                            <div class="alert alert-success" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ error|escape }}
+                            </div><br>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error|escape }}
+                        </div><br>
+                    {% endfor %}
+                    </div>
+                {% endif %}
                 <div class="col-md-12">
                     {% include 'crm/task/include/task-cards.html' %}
                     {% include 'crm/task/include/task-list.html' %}

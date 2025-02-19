@@ -10,7 +10,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ['task_id','title', 'deadline','set_today']
+    list_display = ['task_id', 'title', 'deadline', 'set_today']
 
 
 admin.site.register(UserCompany)
@@ -19,3 +19,5 @@ admin.site.register(ContactPerson)
 admin.site.register(Order)
 
 admin.site.register(CalendarEvent)
+admin.site.register(Notification)
+admin.site.register(NotificationView)

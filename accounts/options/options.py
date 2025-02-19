@@ -171,9 +171,19 @@ TASK_STATUS = (
     (3, _("Done")),
 )
 
-
 Event_Type = (
     (1, 'Meeting'),
     (2, 'Appointment'),
     (3, 'Event')
+)
+NotificationType = (
+    (1, 'Customer'),
+    (2, 'Company'),
+    (3, 'Order'),
+    (4, 'Task'),
+    (5, 'Calendar'),
+)
+NotificationActionType = (
+    (1, 'Add'),
+    (2, 'Edit')
 )

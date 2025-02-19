@@ -28,10 +28,15 @@ urlpatterns = [
     # task
     path('tasks/', TaskView, name='tasks'),
     path('task/set_today/<slug>/', task_set_priority, name='task_set_priority'),
+    path('task-add/', TaskAddView, name='task-add'),
+    path('task/<slug>/', TaskUpdateView, name='task-update'),
     # calendar
     path('calendar/', calendar_view, name='calendar'),
     path('api/events/', get_events, name='get-events'),
     # path('order/<slug>/', OrderUpdateView, name='order-update'),
+    # notification
+
+    path('notification/detail/<path:slug>/', notification_detail_view, name='notification_detail_view'),
 
     # settings
 

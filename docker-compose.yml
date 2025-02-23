@@ -30,24 +30,9 @@ services:
     depends_on:
       - postgres
 
-  nginx:
-    container_name: nginx
-    image: nginx:latest
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf  # Nginx konfiqurasiyasını daxil edin
-      - ./staticfiles:/static  # Static faylları təmin et
-      - ./media:/media  # Media faylları təmin et
-    ports:
-      - "80:80"  # HTTP port
-      - "443:443"  # HTTPS port (əgər SSL istifadə edirsinizsə)
-    depends_on:
-      - django_app  # Nginx əvvəlcə Django konteynerinə ehtiyac duyur
-    networks:
-      - nginx-proxy  # Nginx proxy şəbəkəsinə qoşulun
-
 networks:
   default:
     external:
-      name: nginx-proxy  # External şəbəkə, əgər nginx-proxy konteyneriniz varsa
+      name: nginx-proxy
   web:
     external: true

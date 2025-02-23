@@ -139,7 +139,7 @@ LANGUAGES = (
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale')
 ]
-STATIC_URL = 'static'
+STATIC_URL = '/static/'
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 if DEBUG:
     STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]

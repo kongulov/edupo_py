@@ -17,7 +17,7 @@ class Company(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,
                               related_name="company_owner")
     name = models.CharField(max_length=1500, verbose_name="Company name")
-    company_logo = models.ImageField(verbose_name=_('Company logo'), upload_to='companies', null=True, blank=True)
+    company_logo = models.ImageField(verbose_name=_('Company logo'), upload_to='companies/', null=True, blank=True)
     address = models.CharField(max_length=1500, verbose_name="Company address", null=True)
     email = models.EmailField(verbose_name=_('Email'), null=True)
     phone_number = models.CharField(max_length=12000, verbose_name="Phone number", null=True)

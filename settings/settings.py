@@ -93,7 +93,7 @@ else:
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'edupo_secure_new_db',
             'USER': 'edupo_secure_new_user',
-            'PASSWORD': '!!edupoSTvvb767655412323AvGeasdada!!05',
+            'PASSWORD': '!!EADPSESTvASDsaWvb76765DDDSA5412323AvGeasdada!!05',
             'HOST': 'postgres',
             'PORT': '5432',
         }
@@ -145,6 +145,9 @@ if DEBUG:
     STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

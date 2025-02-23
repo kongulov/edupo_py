@@ -19,7 +19,7 @@ class Customers(models.Model):
     gender = models.IntegerField(choices=GENDER, verbose_name=_('Gender'))
     next_step = models.IntegerField(choices=NEXT_STEP, verbose_name=_('Next Step'))
     status = models.IntegerField(choices=STATUS, verbose_name=_('Status'))
-    price = models.DecimalField(_('Price'), max_digits=1000000000, decimal_places=1)
+    price = models.DecimalField(_('Price'), max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
 
     slug = models.SlugField(unique=True, editable=False, null=True)

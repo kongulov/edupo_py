@@ -23,4 +23,4 @@ RUN if [ -f manage.py ]; then python manage.py collectstatic --noinput; fi
 EXPOSE 8000
 
 # Django serverini başlat
-CMD ["gunicorn", "--chdir", "/code", "config.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "--chdir", "/code", "settings.wsgi:application", "--bind", "0.0.0.0:8000"]

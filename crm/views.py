@@ -24,7 +24,7 @@ def DashboardView(request):
 @login_required(login_url='/sign-in/')
 def CustomersView(request):
     context = {}
-    context['customers_list'] = Customers.objects.all()
+    context['customers_list'] = Customers.objects.filter(company=request.user.company)
     return render(request, 'crm/customers/customer-list.html', context)
 
 
@@ -37,7 +37,7 @@ def CustomerAddView(request):
             customer = form.save(commit=False)
             customer.company = request.user.company
             customer.save()
-            Notification.objects.create(sender=request.user, receiver=request.user, type=1,action_type=1)
+            Notification.objects.create(sender=request.user, receiver=request.user, type=1, action_type=1)
             messages.success(request,
                              'The new customer has been successfully added.')
             return redirect('crm:customers')
@@ -61,8 +61,8 @@ def CustomerUpdateView(request, slug):
         if form.is_valid():
             customer = form.save(commit=False)
             customer.save()
+            Notification.objects.create(sender=request.user, receiver=request.user, type=1, action_type=2)
 
-            Notification.objects.create(sender=request.user, receiver=request.user, type=1,action_type=2)
             messages.success(request,
                              'The customer information has been successfully updated.')
             return redirect('crm:customers')
@@ -119,7 +119,7 @@ def UserCompanyAddView(request):
 
             company.save()
 
-            Notification.objects.create(sender=request.user, receiver=request.user, type=2,action_type=1)
+            Notification.objects.create(sender=request.user, receiver=request.user, type=2, action_type=1)
             ContactPerson.objects.create(user_company=company, email=email, phone=phone, position=position,
                                          first_name=first_name, last_name=last_name),
             messages.success(request,
@@ -146,7 +146,7 @@ def UserCompanyUpdateView(request, slug):
             company = form.save(commit=False)
             company.save()
 
-            Notification.objects.create(sender=request.user, receiver=request.user, type=2,action_type=2)
+            Notification.objects.create(sender=request.user, receiver=request.user, type=2, action_type=2)
             messages.success(request,
                              'The company information has been successfully updated.')
             return redirect('crm:user-companies')
@@ -179,6 +179,7 @@ def ContactPersonAddView(request):
             contact = form.save(commit=False)
 
             contact.save()
+
             messages.success(request,
                              'The new contact has been successfully added.')
             return redirect('crm:contacts')
@@ -236,7 +237,7 @@ def OrderAddView(request):
             order.author = request.user
             order.save()
 
-            Notification.objects.create(sender=request.user, receiver=request.user, type=3,action_type=1)
+            Notification.objects.create(sender=request.user, receiver=request.user, type=3, action_type=1)
             messages.success(request,
                              'The new order has been successfully added.')
             return redirect('crm:orders')
@@ -263,7 +264,7 @@ def OrderUpdateView(request, slug):
             order = form.save(commit=False)
             order.save()
 
-            Notification.objects.create(sender=request.user, receiver=request.user, type=3,action_type=2)
+            Notification.objects.create(sender=request.user, receiver=request.user, type=3, action_type=2)
             messages.success(request,
                              'The order information has been successfully updated.')
             return redirect('crm:orders')
@@ -326,7 +327,7 @@ def TaskAddView(request):
             task.author = request.user
             task.save()
 
-            Notification.objects.create(sender=request.user, receiver=request.user, type=4,action_type=1)
+            Notification.objects.create(sender=request.user, receiver=request.user, type=4, action_type=1)
 
             messages.success(request,
                              'The new task has been successfully added.')
@@ -354,7 +355,7 @@ def TaskUpdateView(request, slug):
             task = form.save(commit=False)
             task.save()
 
-            Notification.objects.create(sender=request.user, receiver=request.user, type=4,action_type=2)
+            Notification.objects.create(sender=request.user, receiver=request.user, type=4, action_type=2)
             messages.success(request,
                              'The task information has been successfully updated.')
             return redirect('crm:tasks')
@@ -385,7 +386,7 @@ def calendar_view(request):
             calendar.author = request.user
             calendar.save()
 
-            Notification.objects.create(sender=request.user, receiver=request.user, type=5,action_type=1)
+            Notification.objects.create(sender=request.user, receiver=request.user, type=5, action_type=1)
             messages.success(request,
                              'The new event has been successfully added.')
             return redirect('crm:calendar')

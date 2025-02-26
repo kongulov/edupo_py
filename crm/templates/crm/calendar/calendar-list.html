@@ -135,44 +135,89 @@
             </div>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add New Event</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add New Event</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">Event Title</label>
-                                <input type="text" class="form-control" id="eventTitleInput" placeholder="Enter Event Title">
+                                <label class="form-label">Title</label>
+                                {{ form.title }}
                             </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Content</label>
+                                {{ form.content }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Event Type</label>
-                                <select class="form-select" id="eventTypeInput">
-                                    <option value="meeting">Meeting</option>
-                                    <option value="appointment">Appointment</option>
-                                    <option value="birthday">Birthday</option>
-                                </select>
+                                {{ form.event_type }}
                             </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Location</label>
+                                {{ form.location }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Attendees</label>
+                                {{ form.attendees }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Color</label>
+                                {{ form.color }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Start Date</label>
-                                <input type="datetime-local" class="form-control" id="startDateInput">
+                                {{ form.start_datetime }}
                             </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">End Date</label>
-                                <input type="datetime-local" class="form-control" id="endDateInput">
+                                {{ form.end_datetime }}
                             </div>
-                            <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-primary">Add Event</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">Add Event</button>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
+</div>
+
+
+
     </div>
 {% endblock %}
 

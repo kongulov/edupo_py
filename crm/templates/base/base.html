@@ -1068,17 +1068,33 @@
                                                                                 You updated customer information
                                                                             {% endif %}
 
-                                                                            {% if obj.type == 2 %}
+                                                                            {% if obj.type == 2 and obj.action_type == 1 %}
                                                                                 You added new company
                                                                             {% endif %}
-                                                                            {% if obj.type == 3 %}
+
+                                                                            {% if obj.type == 2 and obj.action_type == 2 %}
+                                                                                You updated company information
+                                                                            {% endif %}
+                                                                            {% if obj.type == 3 and obj.action_type == 1 %}
                                                                                 You added new order
                                                                             {% endif %}
-                                                                            {% if obj.type == 4 %}
+
+                                                                            {% if obj.type == 3 and obj.action_type == 2 %}
+                                                                                You updated order information
+                                                                            {% endif %}
+                                                                            {% if obj.type == 4 and obj.action_type == 1 %}
                                                                                 You added new task
                                                                             {% endif %}
-                                                                            {% if obj.type == 5 %}
+
+                                                                            {% if obj.type == 4 and obj.action_type == 2 %}
+                                                                                You updated task information
+                                                                            {% endif %}
+                                                                            {% if obj.type == 5 and obj.action_type == 1 %}
                                                                                 You added new event
+                                                                            {% endif %}
+
+                                                                            {% if obj.type == 5 and obj.action_type == 2 %}
+                                                                                You updated event information
                                                                             {% endif %}
 
 

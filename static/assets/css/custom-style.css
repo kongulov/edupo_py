@@ -11,7 +11,7 @@ span.bg-danger-subtle.notification_count {
     color: red;
     font-size: 15px;
     position: relative;
-    left: -15px;
+    left: -10px;
     top: -10px;
 }
 

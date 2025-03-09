@@ -201,3 +201,156 @@ class CompanyEditForm(forms.ModelForm):
         self.fields['phone_number'].label = "Phone number"
         self.fields['address'].label = "Address"
         self.fields['website'].label = "Website"
+
+
+class GeneralSettingsForm(forms.ModelForm):
+    class Meta:
+        model = MyUser
+        fields = ('language',)
+        widgets = {
+            'language': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control col-md-6'})
+
+
+class UserAddForm(forms.ModelForm):
+    email = forms.EmailField(max_length=100, widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Email',
+        'label': 'Email',
+    }
+    ))
+    first_name = forms.CharField(max_length=1200, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Ad',
+        'autofocus': '',
+        'label': 'Ad',
+
+    }))
+    last_name = forms.CharField(max_length=1200, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Soyad',
+        'label': '',
+    }))
+
+    password1 = forms.CharField(max_length=100, widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Şifrə',
+            'label': '',
+        }
+    ))
+    password2 = forms.CharField(max_length=100, widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Şifrəni doğrula',
+            'label': '',
+        }
+    ))
+
+    class Meta:
+        model = MyUser
+        fields = ('first_name', 'last_name', 'usertype', 'email', 'password1', 'password2')
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+
+        try:
+            match = MyUser.objects.get(email=email)
+        except User.DoesNotExist:
+            return email
+        raise forms.ValidationError('This email is already registered.')
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+
+        try:
+            match = MyUser.objects.get(username=username)
+        except User.DoesNotExist:
+            return username
+        raise forms.ValidationError('This username is already registered. Please to try again.')
+
+    def __init__(self, *args, **kwargs):
+        super(UserAddForm, self).__init__(*args, **kwargs)
+        self.fields['email'].label = "Email"
+        self.fields['password1'].label = "Password"
+        self.fields['password2'].label = "Re-type password"
+        self.fields['first_name'].label = "First name"
+        self.fields['last_name'].label = "Last name"
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control col-md-6'})
+
+
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField(max_length=100, widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Email',
+    }))
+
+    first_name = forms.CharField(max_length=1200, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'First Name',
+        'autofocus': '',
+    }))
+
+    last_name = forms.CharField(max_length=1200, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Last Name',
+    }))
+
+    # password1 = forms.CharField(max_length=100, required=False, widget=forms.PasswordInput(attrs={
+    #     'class': 'form-control',
+    #     'placeholder': 'New Password (leave blank to keep current password)',
+    # }))
+    #
+    # password2 = forms.CharField(max_length=100, required=False, widget=forms.PasswordInput(attrs={
+    #     'class': 'form-control',
+    #     'placeholder': 'Confirm New Password',
+    # }))
+
+    # is_active = forms.BooleanField(
+    #     label="Active",
+    #     required=False,
+    #     widget=forms.CheckboxInput(attrs={
+    #         'class': 'form-check-input',
+    #     }),
+    #     initial=True
+    # )
+
+    class Meta:
+        model = MyUser
+        fields = ('first_name', 'last_name', 'usertype', 'email')
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        user = self.instance
+
+        if MyUser.objects.filter(email=email).exclude(id=user.id).exists():
+            raise forms.ValidationError('This email is already registered.')
+        return email
+
+    # def clean_password2(self):
+    #     password1 = self.cleaned_data.get('password1')
+    #     password2 = self.cleaned_data.get('password2')
+    #
+    #     if password1 and password2:
+    #         if password1 != password2:
+    #             raise forms.ValidationError("Passwords do not match.")
+    #     elif password1 or password2:
+    #         raise forms.ValidationError("Both password fields must be filled if you wish to change the password.")
+    #
+    #     return password2
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].label = "Email"
+        self.fields['first_name'].label = "First Name"
+        self.fields['last_name'].label = "Last Name"
+
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control col-md-6'})

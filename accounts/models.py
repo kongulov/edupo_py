@@ -63,6 +63,11 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
                                     help_text=_('Designates whether this user should be treated as '
                                                 'active. Unselect this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+    LANGUAGE_CHOICES = [
+        ('en', 'English'),
+        ('az', 'Azerbaijani'),
+    ]
+    language = models.CharField(max_length=5, choices=LANGUAGE_CHOICES, default='en', blank=True, null=True)
 
     objects = UserManager()
 

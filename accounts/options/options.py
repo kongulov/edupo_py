@@ -1,45 +1,48 @@
 from django.utils.translation import gettext_lazy as _
 
 USERTYPE = (
-    (1, 'Admin'),
-    (2, 'Manager'),
+    (1, _('Admin')),
+    (2, _('Manager')),
+    (3, _('Assistant')),
 )
 
 PACKAGES = (
-    (1, _("Free")),
-    (2, _("Silver")),
-    (3, _("Gold")),
-    (4, _("Premium")),
+    (1, _('Free')),
+    (2, _('Silver')),
+    (3, _('Gold')),
+    (4, _('Premium')),
 )
+
 STAGES = (
-    (1, _("Lead")),
-    (2, _("Qualified")),
-    (3, _("Pending")),
-    (4, _("Postponed")),
+    (1, _('Lead')),
+    (2, _('Qualified')),
+    (3, _('Pending')),
+    (4, _('Postponed')),
     (5, _('Contracted')),
     (6, _('Canceled')),
     (7, _('Rejected')),
 )
+
 PRODUCT = (
-    (1, _("Course")),
-    (2, _("Training")),
+    (1, _('Course')),
+    (2, _('Training')),
 )
 
 GENDER = (
-    (1, _("Male")),
-    (2, _("Female")),
+    (1, _('Male')),
+    (2, _('Female')),
 )
 
 NEXT_STEP = (
-    (1, _("Follow up")),
-    (2, _("Retarget")),
-    (3, _("Closed"))
+    (1, _('Follow up')),
+    (2, _('Retarget')),
+    (3, _('Closed')),
 )
 
 STATUS = (
-    (1, _("Student")),
-    (2, _("Employed")),
-    (3, _("Unemployed")),
+    (1, _('Student')),
+    (2, _('Employed')),
+    (3, _('Unemployed')),
 )
 
 COUNTRY_CITIES = (
@@ -111,6 +114,7 @@ COUNTRY_CITIES = (
     (66, _('Zəngilan')),
     (67, _('Zərdab')),
 )
+
 INDUSTRY_CHOICES = [
     (1, _('Technology')),
     (2, _('Healthcare')),
@@ -145,45 +149,103 @@ INDUSTRY_CHOICES = [
 ]
 
 ORDER_STATUS = (
-    (1, _("New")),
-    (2, _("Qualified")),
-    (3, _("Processing")),
-    (4, _("Postponed")),
+    (1, _('New')),
+    (2, _('Qualified')),
+    (3, _('Processing')),
+    (4, _('Postponed')),
     (5, _('Contracted')),
     (6, _('Rejected')),
 )
 
 TASK_TYPE = (
-    (1, _("Personal")),
-    (2, _("Phone Call")),
-    (3, _("Message")),
-    (4, _("Email")),
+    (1, _('Personal')),
+    (2, _('Phone Call')),
+    (3, _('Message')),
+    (4, _('Email')),
 )
+
 PRIORITY_LEVEL = (
-    (1, _("High")),
-    (2, _("Medium")),
-    (3, _("Low")),
+    (1, _('High')),
+    (2, _('Medium')),
+    (3, _('Low')),
 )
 
 TASK_STATUS = (
-    (1, _("To Do")),
-    (2, _("In Progress")),
-    (3, _("Done")),
+    (1, _('To Do')),
+    (2, _('In Progress')),
+    (3, _('Done')),
 )
 
 Event_Type = (
-    (1, 'Meeting'),
-    (2, 'Appointment'),
-    (3, 'Event')
+    (1, _('Meeting')),
+    (2, _('Appointment')),
+    (3, _('Event')),
 )
+
 NotificationType = (
-    (1, 'Customer'),
-    (2, 'Company'),
-    (3, 'Order'),
-    (4, 'Task'),
-    (5, 'Calendar'),
+    (1, _('Customer')),
+    (2, _('Company')),
+    (3, _('Order')),
+    (4, _('Task')),
+    (5, _('Calendar')),
 )
+
 NotificationActionType = (
-    (1, 'Add'),
-    (2, 'Edit')
+    (1, _('Add')),
+    (2, _('Edit')),
+)
+
+CourseStatus = (
+    (1, _('Enable')),
+    (0, _('Disable')),
+)
+
+DurationType = (
+    (1, _('Day')),
+    (2, _('Week')),
+    (3, _('Month')),
+)
+
+Currency = (
+    ('AZN', _('Azərbaycan Manatı')),
+    ('USD', _('United States Dollar')),
+    ('EUR', _('Euro')),
+    ('JPY', _('Japanese Yen')),
+    ('GBP', _('British Pound')),
+    ('AUD', _('Australian Dollar')),
+    ('CAD', _('Canadian Dollar')),
+    ('CHF', _('Swiss Franc')),
+    ('CNY', _('Chinese Yuan')),
+    ('SEK', _('Swedish Krona')),
+    ('NZD', _('New Zealand Dollar')),
+    ('MXN', _('Mexican Peso')),
+    ('SGD', _('Singapore Dollar')),
+    ('HKD', _('Hong Kong Dollar')),
+    ('NOK', _('Norwegian Krone')),
+    ('KRW', _('South Korean Won')),
+    ('TRY', _('Turkish Lira')),
+    ('INR', _('Indian Rupee')),
+    ('BRL', _('Brazilian Real')),
+    ('RUB', _('Russian Ruble')),
+    ('ZAR', _('South African Rand')),
+    ('MYR', _('Malaysian Ringgit')),
+    ('PHP', _('Philippine Peso')),
+    ('IDR', _('Indonesian Rupiah')),
+    ('THB', _('Thai Baht')),
+    ('PLN', _('Polish Zloty')),
+    ('CZK', _('Czech Koruna')),
+    ('HUF', _('Hungarian Forint')),
+    ('KRW', _('South Korean Won')),
+    ('ILS', _('Israeli Shekel')),
+    ('SAR', _('Saudi Riyal')),
+    ('AED', _('United Arab Emirates Dirham')),
+    ('EGP', _('Egyptian Pound')),
+    ('COP', _('Colombian Peso')),
+    ('VND', _('Vietnamese Dong')),
+    ('NGN', _('Nigerian Naira')),
+    ('PKR', _('Pakistani Rupee')),
+    ('KWD', _('Kuwaiti Dinar')),
+    ('QAR', _('Qatari Riyal')),
+    ('OMR', _('Omani Rial')),
+    ('BDT', _('Bangladeshi Taka')),
 )

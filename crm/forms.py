@@ -275,8 +275,9 @@ class CalendarEventAddForm(forms.ModelForm):
         for field_name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control'})
 
+
 # end calendar event
-#task add form
+# task add form
 class TaskAddForm(forms.ModelForm):
     class Meta:
         model = Task
@@ -301,6 +302,7 @@ class TaskAddForm(forms.ModelForm):
             field.widget.attrs.update({'class': 'form-control col-md-6'})
 
 
+# task update
 class TaskUpdateForm(forms.ModelForm):
     class Meta:
         model = Task
@@ -317,6 +319,59 @@ class TaskUpdateForm(forms.ModelForm):
             'deadline': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
             'priority': forms.Select(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control col-md-6'})
+
+
+# course add form
+class CourseAddForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = [
+            'name',
+            'status',
+            'price',
+            'currency',
+            'duration',
+            'duration_type',
+        ]
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'price': forms.TextInput(attrs={'class': 'form-control'}),
+            'currency': forms.Select(attrs={'class': 'form-control'}),
+            'duration': forms.TextInput(attrs={'class': 'form-control'}),
+            'duration_type': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control col-md-6'})
+
+
+class CourseUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = [
+            'name',
+            'status',
+            'price',
+            'currency',
+            'duration',
+            'duration_type',
+        ]
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'price': forms.TextInput(attrs={'class': 'form-control'}),
+            'currency': forms.Select(attrs={'class': 'form-control'}),
+            'duration': forms.TextInput(attrs={'class': 'form-control'}),
+            'duration_type': forms.Select(attrs={'class': 'form-control'}),
         }
 
     def __init__(self, *args, **kwargs):

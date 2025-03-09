@@ -169,6 +169,28 @@
                                     </i><span class="">Company profile</span>
                                 </a>
                             </li>
+{#                             <li class=" sidebar-layout">#}
+{#                                <a href="{% url 'crm:general-settings' %}" class="svg-icon">#}
+{#                                    <i class="fas fa-building">#}
+{##}
+{#                                    </i><span class="">General settings</span>#}
+{#                                </a>#}
+{#                            </li>#}
+
+                             <li class=" sidebar-layout">
+                                <a href="{% url 'crm:course-list' %}" class="svg-icon">
+                                    <i class="fas fa-list">
+
+                                    </i><span class="">Course list</span>
+                                </a>
+                            </li>
+                             <li class=" sidebar-layout">
+                                <a href="{% url 'crm:user-list' %}" class="svg-icon">
+                                    <i class="fas fa-list">
+
+                                    </i><span class="">User list</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class=" sidebar-layout">
@@ -1114,9 +1136,9 @@
                                             </ul>
                                         </div>
                                         <div class="card-footer text-muted p-3">
-                                            <p class="mb-0 text-primary text-center font-weight-bold">Show all
-                                                notifications
-                                            </p>
+                                            <a class="mb-0 text-primary text-center font-weight-bold" href="{% url 'crm:notification' %}">
+                                                Show all notifications
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

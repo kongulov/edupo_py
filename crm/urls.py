@@ -37,10 +37,18 @@ urlpatterns = [
     # notification
 
     path('notification/detail/<path:slug>/', notification_detail_view, name='notification_detail_view'),
+    path('notification/', notification_view, name='notification'),
 
     # settings
 
     path('settings/company-profile/', CompanyProfileUpdateView, name='company-profile'),
+    path('settings/general-settings/', GeneralSettingsUpdateView, name='general-settings'),
+    path('settings/course-list/', CourseListView, name='course-list'),
+    path('settings/course-add/', CourseAddView, name='course-add'),
+    path('settings/course/<slug>/', CourseUpdateView, name='course-update'),
+    path('settings/user-list/', UserListView, name='user-list'),
+    path('settings/user-add/', UserAddView, name='user-add'),
+    path('settings/user/<slug>/', UserUpdateView, name='user-update'),
     # #     path('sertler-qaydalar', views.PrivacyView, name='privacy'),
     # #     path('istifadeci-huquqlari', views.UserRightsView, name='userrights'),
     # path('elaqe', ContactView, name='contact'),

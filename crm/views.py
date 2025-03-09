@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 
-from accounts.forms import CompanyEditForm
+from accounts.forms import *
 from crm.forms import *
 from crm.models import *
 
@@ -385,7 +385,6 @@ def calendar_view(request):
             calendar.company = request.user.company
             calendar.author = request.user
             calendar.save()
-
             Notification.objects.create(sender=request.user, receiver=request.user, type=5, action_type=1)
             messages.success(request,
                              'The new event has been successfully added.')
@@ -412,6 +411,8 @@ def get_events(request):
 
 # end calendar view
 
+
+# settings
 # start company profile
 
 
@@ -434,6 +435,160 @@ def CompanyProfileUpdateView(request):
     return render(request, 'settings/company-profile.html', context)
 
 
+# end company profile
+# start general settings
+@login_required(login_url='/sign-in/')
+def GeneralSettingsUpdateView(request):
+    context = {}
+    obj = request.user
+    context['obj'] = obj
+
+    if request.method == 'POST':
+        form = GeneralSettingsForm(request.POST, request.FILES, instance=obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'The general settings information has been successfully updated.')
+            return redirect('crm:crm-dashboard')
+    else:
+        form = GeneralSettingsForm(instance=obj)
+    context['form'] = form
+    return render(request, 'settings/general-settings.html', context)
+
+
+# end general settings
+# start course list
+@login_required(login_url='/sign-in/')
+def CourseListView(request):
+    context = {}
+    context['course_list'] = Course.objects.filter(company=request.user.company)
+    return render(request, 'settings/courses/course-list.html', context)
+
+
+# end course list
+# add course
+@login_required(login_url='/sign-in/')
+def CourseAddView(request):
+    if request.method == 'POST':
+        form = CourseAddForm(request.POST)
+        if form.is_valid():
+            course = form.save(commit=False)
+            course.company = request.user.company
+            course.author = request.user
+            course.save()
+
+            messages.success(request,
+                             'The new course has been successfully added.')
+            return redirect('crm:course-list')
+    else:
+        form = CourseAddForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'settings/courses/course-add.html', context)
+
+
+# course update
+@login_required(login_url='/sign-in/')
+def CourseUpdateView(request, slug):
+    context = {}
+
+    obj = get_object_or_404(Course, slug=slug)
+    context['obj'] = obj
+
+    if request.method == 'POST':
+
+        form = CourseUpdateForm(request.POST, instance=obj)
+
+        if form.is_valid():
+            course = form.save(commit=False)
+            course.save()
+            messages.success(request,
+                             'The course information has been successfully updated.')
+            return redirect('crm:course-list')
+    else:
+
+        form = CourseUpdateForm(instance=obj)
+    context['form'] = form
+    return render(request, 'settings/courses/course-update.html', context)
+
+
+# user section
+@login_required(login_url='/sign-in/')
+def UserListView(request):
+    context = {}
+    context['user_list'] = MyUser.objects.filter(company=request.user.company)
+
+    return render(request, 'settings/users/user-list.html', context)
+
+
+def UserAddView(request):
+    context = {}
+    if request.method == 'POST':
+        form = UserAddForm(request.POST)
+
+        if form.is_valid():
+
+            password1 = form.cleaned_data.get('password1')
+            password2 = form.cleaned_data.get('password2')
+
+            if password1 != password2:
+                form.add_error('password2', 'Passwords do not match!')
+            else:
+
+                user = form.save(commit=False)
+                user.set_password(password1)
+                user.company = request.user.company
+                user.save()
+
+                messages.success(request, 'User has been successfully added!')
+
+                return redirect('crm:user-list')
+
+        else:
+
+            messages.error(request, 'Please fill out the form correctly!')
+    else:
+        form = UserAddForm()
+    context['form'] = form
+    return render(request, 'settings/users/user-add.html', context)
+
+
+def UserUpdateView(request, slug):
+    context = {}
+    user = get_object_or_404(MyUser, slug=slug)  # Retrieve the user object by slug
+
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=user)  # Bind the form with the existing user data
+
+        if form.is_valid():
+            password1 = form.cleaned_data.get('password1')
+            password2 = form.cleaned_data.get('password2')
+
+            if password1 != password2:
+                form.add_error('password2', 'Passwords do not match!')
+            else:
+                user = form.save(commit=False)
+
+                # If the password is provided, set it
+                if password1:
+                    user.set_password(password1)
+
+                user.save()  # Save the updated user
+
+                messages.success(request, 'User details have been successfully updated!')
+                return redirect('crm:user-list')  # Redirect to the user list page
+
+        else:
+            messages.error(request, 'Please fill out the form correctly!')
+
+    else:
+        form = UserUpdateForm(instance=user)  # Pre-fill the form with the user's current details
+
+    context['form'] = form
+    return render(request, 'settings/users/user-update.html', context)
+
+# end settings
+
 # notification
 def notification_detail_view(request, slug):
     obj = get_object_or_404(Notification, slug=slug)
@@ -449,3 +604,9 @@ def notification_detail_view(request, slug):
         return redirect('crm:tasks')
     elif obj.type == 5:
         return redirect('crm:calendar')
+
+
+def notification_view(request):
+    context = {}
+
+    return render(request, 'crm/notification/notification.html', context)

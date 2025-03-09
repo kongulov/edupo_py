@@ -35,7 +35,7 @@ def signup_view(request):
         co_form = CompanyRegistrForm(request.POST)
         if form.is_valid() and co_form.is_valid():
             user = form.save(commit=False)
-            user.reg_type = 1
+            user.usertype = 1
             user.is_active = True
             user.created_date = timezone.now()
             user.save()

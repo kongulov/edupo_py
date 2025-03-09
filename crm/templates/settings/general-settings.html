@@ -1,0 +1,84 @@
+{% extends 'base/base.html' %}
+{% load static i18n %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+    <div class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 mb-1">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+                                 aria-label="breadcrumb">
+                                <ol class="breadcrumb p-0 mb-2">
+                                    <li class="breadcrumb-item"><a href="#">Settings</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Company profile</li>
+                                </ol>
+                            </nav>
+                        </div>
+
+                    </div>
+                    {% if messages %}
+
+                        <div class="m-lg-3">
+                        <div class="messages" style="list-style: none;text-align: center;">
+                            {% for message in messages %}
+                                <div class="alert alert-success" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error|escape }}
+                                </div><br>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ error|escape }}
+                            </div><br>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+                <div class="col-lg-12 mb-3 d-flex justify-content-between">
+                    <h4 class="fw-bold d-flex align-items-center">Edit Company Profile</h4>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post" enctype="multipart/form-data" class="row">
+                                {% csrf_token %}
+                                    <div class="row">
+                                        {% for field in form %}
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                                    {{ field }}
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+
+
+                                <div class="d-flex justify-content-end mt-3 gap-2">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

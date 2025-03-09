@@ -1,0 +1,75 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block body %}
+
+    <div class="content-page">
+        <div class="container-fluid">
+            <div class="card-body overflow-auto card-header-border p-0 card-body-list"
+                 style="max-height: 500px;">
+                <ul class="dropdown-menu-1 overflow-auto list-style-1 mb-0">
+                    {% for obj in notification_list %}
+                        <li class="dropdown-item-1 float-none p-3 border-bottom">
+                            <div class="list-item d-flex justify-content-start align-items-start">
+
+                                <div class="list-style-detail ms-2 me-2">
+                                    <a href="{% url 'crm:notification_detail_view' obj.slug %}">
+                                                                    <span {% if not obj.is_read %}class="fw-bold"{% endif %}>
+                                                                        {% if obj.sender == obj.receiver %}
+                                                                            {% if obj.type == 1 and obj.action_type == 1 %}
+                                                                                You added new customer
+                                                                            {% endif %}
+
+                                                                            {% if obj.type == 1 and obj.action_type == 2 %}
+                                                                                You updated customer information
+                                                                            {% endif %}
+
+                                                                            {% if obj.type == 2 and obj.action_type == 1 %}
+                                                                                You added new company
+                                                                            {% endif %}
+
+                                                                            {% if obj.type == 2 and obj.action_type == 2 %}
+                                                                                You updated company information
+                                                                            {% endif %}
+                                                                            {% if obj.type == 3 and obj.action_type == 1 %}
+                                                                                You added new order
+                                                                            {% endif %}
+
+                                                                            {% if obj.type == 3 and obj.action_type == 2 %}
+                                                                                You updated order information
+                                                                            {% endif %}
+                                                                            {% if obj.type == 4 and obj.action_type == 1 %}
+                                                                                You added new task
+                                                                            {% endif %}
+
+                                                                            {% if obj.type == 4 and obj.action_type == 2 %}
+                                                                                You updated task information
+                                                                            {% endif %}
+                                                                            {% if obj.type == 5 and obj.action_type == 1 %}
+                                                                                You added new event
+                                                                            {% endif %}
+
+                                                                            {% if obj.type == 5 and obj.action_type == 2 %}
+                                                                                You updated event information
+                                                                            {% endif %}
+
+
+
+                                                                        {% endif %}</span>
+                                    </a>
+
+                                    <p class="m-0 pt-1">
+                                        <small class="text-secondary">
+                                            <i class="fas fa-clock"></i>&nbsp;
+                                            {{ obj.created|date:"j F Y, h:m" }}</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

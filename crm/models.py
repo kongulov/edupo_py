@@ -50,8 +50,14 @@ class Customers(models.Model):
 
 
 class Course(models.Model):
+    company = models.ForeignKey(Company, verbose_name=_('Course Company'), on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(MyUser, verbose_name=_('Course Author'), on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=1500, verbose_name=_("Course Name"))
+    status = models.IntegerField(choices=CourseStatus, verbose_name=_("Course Status"), default=1)
     price = models.DecimalField(max_digits=20, decimal_places=2)
+    currency = models.CharField(choices=Currency,verbose_name=_('Currency'),null=True,max_length=5)
+    duration = models.CharField(verbose_name=_("Duration"), null=True, max_length=1200)
+    duration_type = models.IntegerField(choices=DurationType, verbose_name=_("Duration Type"),null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(unique=True, editable=False)
 
@@ -64,9 +70,13 @@ class Course(models.Model):
         ordering = ['-id']
 
     def save(self, *args, **kwargs):
-        super(Course, self).save(*args, **kwargs)
-        self.slug = slugify(str(self.name))
-        super(Course, self).save(*args, **kwargs)
+        if not self.id:
+            super(Course, self).save(*args, **kwargs)
+            self.slug = slugify(f"{self.name}-{self.id}")
+            super(Course, self).save(*args, **kwargs)
+        else:
+            self.slug = slugify(f"{self.name}-{self.id}")
+            super(Course, self).save(*args, **kwargs)
 
 
 class UserCompany(models.Model):
@@ -231,7 +241,7 @@ class CalendarEvent(models.Model):
     author = models.ForeignKey(MyUser, verbose_name=_('Task Author'), on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True, null=True)
-    event_type = models.CharField(max_length=10, choices=Event_Type, verbose_name=_('Event Type'), null=True)
+    event_type = models.IntegerField(choices=Event_Type, verbose_name=_('Event Type'), null=True)
     location = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Location'))
     attendees = models.EmailField(blank=True, null=True, verbose_name=_('Attendees email'))
     start_datetime = models.DateTimeField()

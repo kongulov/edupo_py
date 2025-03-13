@@ -95,4 +95,4 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         if self.user_image:
             return self.user_image.url
         else:
-            return "/static/assets/m-student.png"
+            return "/static/assets/images/user/2.jpg"

@@ -587,6 +587,21 @@ def UserUpdateView(request, slug):
     context['form'] = form
     return render(request, 'settings/users/user-update.html', context)
 
+
+# end user
+# start permission
+
+def PermissionManagementView(request):
+    context = {}
+
+    return render(request, 'settings/permission_settings.html', context)
+def PrivacyManagementView(request):
+    context = {}
+
+    return render(request, 'settings/permission_settings.html', context)
+
+
+# end permission
 # end settings
 
 # notification

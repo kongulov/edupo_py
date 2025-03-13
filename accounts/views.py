@@ -57,3 +57,7 @@ def signup_view(request):
     context['co_form'] = co_form
     return render(request, 'useractions/registration.html', context)
 
+
+def MyProfileView(request):
+    context = {}
+    return render(request, 'settings/my-profile/my-account.html', context)

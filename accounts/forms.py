@@ -354,3 +354,56 @@ class UserUpdateForm(forms.ModelForm):
 
         for field_name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control col-md-6'})
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = MyUser
+        fields = (
+            'first_name',
+            'last_name',
+            'email',
+            'phone_number',
+            'user_image',
+            'position',
+        )
+
+    first_name = forms.CharField(max_length=100, label='', widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'autofocus': '',
+        'placeholder': _('First name'),
+    }))
+
+    last_name = forms.CharField(max_length=100, label='', widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'autofocus': '',
+        'placeholder': _('Last name'),
+    }))
+
+    email = forms.EmailField(max_length=100, label='', widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': _('Email'),
+    }))
+
+    phone_number = forms.CharField(max_length=100, label='', widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': _('Phone number'),
+    }))
+    user_image = forms.ImageField(max_length=100, label='', widget=forms.FileInput(attrs={
+        'class': 'form-control',
+        'placeholder': _('Image'),
+    }))
+    position = forms.CharField(max_length=100, label='', widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'autofocus': '',
+        'placeholder': _('Position'),
+    }))
+
+
+    def __init__(self, *args, **kwargs):
+        super(EditProfileForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].label = "First name"
+        self.fields['last_name'].label = "Last name"
+        self.fields['email'].label = "Email"
+        self.fields['phone_number'].label = "Phone number"
+        self.fields['user_image'].label = "Image"
+        self.fields['position'].label = "Position"

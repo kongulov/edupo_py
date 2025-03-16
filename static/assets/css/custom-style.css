@@ -6,6 +6,11 @@
     color: white;
 }
 
+.iq-accordion.career-style.faq-style .iq-accordion-block .accordion-details p {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
 span.bg-danger-subtle.notification_count {
     background: transparent !important;
     color: red;

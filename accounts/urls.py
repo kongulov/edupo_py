@@ -8,7 +8,8 @@ urlpatterns = [
     path('sign-in/', LoginView, name='sign-in'),
     path('sign-up/', signup_view, name='sign-up'),
     path('sign-out/', logout_view, name='logout_view'),
-    path('my-profile/', MyProfileView, name='my-profile')
+    path('my-profile/', MyProfileView, name='my-profile'),
+    path('edit-profile/', ProfileUpdateView, name='edit-profile'),
     #
     # path('robots.txt', RedirectView.as_view(url=staticfiles_storage.url('robots.txt'), ), name="robots"),
     # path('telimler', CourseView, name='course'),

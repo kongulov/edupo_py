@@ -5,6 +5,32 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
+                    {% if messages %}
+
+                        <div class="m-lg-3">
+                        <div class="messages" style="list-style: none;text-align: center;">
+                            {% for message in messages %}
+                                <div class="alert alert-success" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error|escape }}
+                                </div><br>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ error|escape }}
+                            </div><br>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
                     <div class="card card-block p-card">
                         <div class="profile-box">
                             <div class="profile-card rounded">
@@ -13,7 +39,7 @@
                                 <h3 class="font-600 text-white text-center mb-0">{{ request.user.get_full_name }}
                                     <h3>
                                         <p style="font-size: 20px"
-                                           class="text-white text-center mb-5">{{ request.user.get_usertype_display }}</p>
+                                           class="text-white text-center mb-5">{{ request.user.position }} ({{ request.user.get_usertype_display }})</p>
                             </div>
                             <div class="pro-content rounded">
                                 <div class="d-flex align-items-center mb-3">

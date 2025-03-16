@@ -249,3 +249,23 @@ Currency = (
     ('OMR', _('Omani Rial')),
     ('BDT', _('Bangladeshi Taka')),
 )
+TicketType = (
+    (1, _('Technical')),
+    (2, _('Feedback')),
+    (3, _('Bug Report')),
+    (4, _('Feature Request')),
+    (5, _('Account Issue')),
+    (6, _('Billing & Payment')),
+    (7, _('General Inquiry')),
+)
+
+TicketStatusType = (
+    (1, _('Open')),
+    (2, _('Closed')),
+)
+
+TICKET_PRIORITY_LEVEL = (
+    (1, _('High')),
+    (2, _('Medium')),
+    (3, _('Low')),
+)

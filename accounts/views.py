@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from accounts.forms import *
@@ -61,3 +62,21 @@ def signup_view(request):
 def MyProfileView(request):
     context = {}
     return render(request, 'settings/my-profile/my-account.html', context)
+
+@login_required(login_url='/sign-in/')
+def ProfileUpdateView(request):
+    context = {}
+
+    obj = request.user
+    context['obj'] = obj
+
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, request.FILES, instance=obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile information has been successfully updated.')
+            return redirect('accounts:my-profile')
+    else:
+        form = EditProfileForm(instance=obj)
+    context['form'] = form
+    return render(request, 'settings/my-profile/edit-profile.html', context)

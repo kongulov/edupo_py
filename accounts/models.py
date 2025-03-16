@@ -55,7 +55,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=1200, verbose_name="Telefon nömrəsi", blank=True, null=True)
 
     description = models.TextField(_('Ətraflı məlumat'), null=True)
-    adress = models.CharField(_('Ünvan'), max_length=5000, null=True)
+    position = models.CharField(_('Position'), max_length=5000, null=True)
     is_staff = models.BooleanField(_('staff status'), default=False,
                                    help_text=_('Designates whether the user can log into this admin '
                                                'site.'))

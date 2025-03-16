@@ -1,0 +1,177 @@
+{% extends 'base/base.html' %}
+{% load static i18n %}
+{% block body %}
+    <div class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 my-schedule mb-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h4 class="fw-bold">Tickets </h4>
+                        </div>
+                        <div class="create-workform">
+                            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                                <div class="modal-product-search d-flex flex-wrap">
+                                    <form class="me-3 position-relative">
+                                        <div class="form-group mb-0">
+                                            <input type="text" class="form-control" id="exampleInputText"
+                                                   placeholder="Search Ticket">
+                                            <a class="search-link" href="#">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="" width="20" fill="none"
+                                                     viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          stroke-width="2"
+                                                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </form>
+                                    <a href="{% url 'main:ticket-add' %}"
+                                       class="btn btn-primary position-relative d-flex align-items-center justify-content-between">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="me-2" width="20" fill="none"
+                                             viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                        </svg>
+                                        Add Ticket
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card car card-stretch">
+                                <div class="card-body p-0">
+                                    <div class="d-flex justify-content-between align-items-center p-3 pb-md-0">
+                                        <h5 class="fw-bold">Ticket List</h5>
+                                        <button class="btn btn-secondary btn-sm">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="me-1" width="20" fill="none"
+                                                 viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                            </svg>
+                                            Export
+                                        </button>
+                                    </div>
+
+                                    {% if messages %}
+
+                                        <div class="m-lg-3">
+                                        <div class="messages" style="list-style: none;text-align: center;">
+                                            {% for message in messages %}
+                                                <div class="alert alert-success" role="alert">
+                                                    {{ message }}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    {% if form.errors %}
+                                        {% for field in form %}
+                                            {% for error in field.errors %}
+                                                <div class="alert alert-danger" role="alert">
+                                                    {{ error|escape }}
+                                                </div><br>
+                                            {% endfor %}
+                                        {% endfor %}
+                                        {% for error in form.non_field_errors %}
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ error|escape }}
+                                            </div><br>
+                                        {% endfor %}
+                                        </div>
+                                    {% endif %}
+
+                                    <div class="table-responsive iq-customer-table">
+                                        <table class="table data-table mb-0">
+                                            <thead class="table-color-heading">
+                                            <tr class="">
+                                                <th scope="col" class="pe-0 w-01">
+                                                    <div class="d-flex justify-content-start align-items-end mb-1 ">
+                                                        <div class="form-check ">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   id="flexCheckDefault2">
+                                                            <label class="form-check-label" for="flexCheckDefault2">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th scope="col">
+                                                    Ticket number
+                                                </th>
+
+                                                <th scope="col">
+                                                    Subject
+                                                </th>
+
+                                                <th scope="col">
+                                                    Type
+                                                </th>
+
+                                                <th scope="col">
+                                                    Status
+                                                </th>
+
+                                                <th scope="col">
+                                                    Priority
+                                                </th>
+
+                                                <th scope="col">
+                                                    Created date
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for obj in tickets %}
+                                                <tr class="white-space-no-wrap">
+                                                    <td class="pe-0 ">
+                                                        <div class="form-check ">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                   id="flexCheckDefault3">
+                                                            <label class="form-check-label" for="flexCheckDefault3">
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="">
+                                                        <div>
+
+                                                            <div class="data-content">
+                                                                <div>
+                                                                    <a href="{% url 'main:ticket_detail' obj.ticket_id %}">{{ obj.ticket_id }}</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{% url 'main:ticket_detail' obj.ticket_id %}">{{ obj.title }}</a>
+                                                    </td>
+                                                    <td>
+                                                        {{ obj.get_ticket_type_display }}
+                                                    </td>
+                                                    <td>
+                                                        {{ obj.get_status_display }}
+                                                    </td>
+
+                                                    <td>
+                                                        {{ obj.get_priority_display }}
+                                                    </td>
+
+                                                    <td>
+                                                        {{ obj.created|date:'j F Y, H:m' }}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

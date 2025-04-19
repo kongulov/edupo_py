@@ -10,6 +10,7 @@ urlpatterns = [
     path('customers/', CustomersView, name='customers'),
     path('customer-add/', CustomerAddView, name='customer-add'),
     path('customer/<slug>/', CustomerUpdateView, name='customer-update'),
+    path('ajax/get-course-price/', get_course_price, name='get_course_price'),
 
     # user companies
 

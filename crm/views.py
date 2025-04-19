@@ -38,13 +38,21 @@ def CustomerAddView(request):
             customer.company = request.user.company
             customer.save()
             Notification.objects.create(sender=request.user, receiver=request.user, type=1, action_type=1)
-            messages.success(request,
-                             'The new customer has been successfully added.')
+            messages.success(request, 'The new customer has been successfully added.')
             return redirect('crm:customers')
     else:
         form = CustomerAddForm()
     context['form'] = form
     return render(request, 'crm/customers/customer-add.html', context)
+
+
+def get_course_price(request):
+    course_id = request.GET.get('course_id')
+    try:
+        course = Course.objects.get(id=course_id)
+        return JsonResponse({'price': str(course.price)})
+    except Course.DoesNotExist:
+        return JsonResponse({'price': None})
 
 
 @login_required(login_url='/sign-in/')
@@ -595,6 +603,8 @@ def PermissionManagementView(request):
     context = {}
 
     return render(request, 'settings/permission_settings.html', context)
+
+
 def PrivacyManagementView(request):
     context = {}
 

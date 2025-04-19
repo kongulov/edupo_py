@@ -6,6 +6,36 @@ from django.utils.translation import gettext_lazy as _
 from accounts.models import *
 
 
+class Course(models.Model):
+    company = models.ForeignKey(Company, verbose_name=_('Course Company'), on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(MyUser, verbose_name=_('Course Author'), on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=1500, verbose_name=_("Course Name"))
+    status = models.IntegerField(choices=CourseStatus, verbose_name=_("Course Status"), default=1)
+    price = models.DecimalField(max_digits=20, decimal_places=2)
+    currency = models.CharField(choices=Currency, verbose_name=_('Currency'), null=True, max_length=5)
+    duration = models.CharField(verbose_name=_("Duration"), null=True, max_length=1200)
+    duration_type = models.IntegerField(choices=DurationType, verbose_name=_("Duration Type"), null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    slug = models.SlugField(unique=True, editable=False)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Course')
+        verbose_name_plural = _('Courses')
+        ordering = ['-id']
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            super(Course, self).save(*args, **kwargs)
+            self.slug = slugify(f"{self.name}-{self.id}")
+            super(Course, self).save(*args, **kwargs)
+        else:
+            self.slug = slugify(f"{self.name}-{self.id}")
+            super(Course, self).save(*args, **kwargs)
+
+
 class Customers(models.Model):
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, related_name='customers_company', null=True)
     customer_id = models.CharField(max_length=20, unique=True, editable=False, null=True, verbose_name=_('Customer ID'))
@@ -15,7 +45,8 @@ class Customers(models.Model):
     email = models.EmailField(_('Email'), max_length=1500)
     location = models.IntegerField(choices=COUNTRY_CITIES, verbose_name=_('Location'), null=True)
     stage = models.IntegerField(choices=STAGES, verbose_name=_('Stage'))
-    course_or_trainings = models.IntegerField(choices=PRODUCT, verbose_name=_('Course/Trainings'))
+    course_or_trainings = models.ForeignKey(Course, on_delete=models.SET_NULL, verbose_name=_('Course or Trainings'),
+                                            null=True)
     gender = models.IntegerField(choices=GENDER, verbose_name=_('Gender'))
     next_step = models.IntegerField(choices=NEXT_STEP, verbose_name=_('Next Step'))
     status = models.IntegerField(choices=STATUS, verbose_name=_('Status'))
@@ -47,36 +78,6 @@ class Customers(models.Model):
                     break
         self.slug = "{}.{}".format(slugify(self.first_name + "-" + self.last_name), self.id)
         super(Customers, self).save(*args, **kwargs)
-
-
-class Course(models.Model):
-    company = models.ForeignKey(Company, verbose_name=_('Course Company'), on_delete=models.SET_NULL, null=True)
-    author = models.ForeignKey(MyUser, verbose_name=_('Course Author'), on_delete=models.SET_NULL, null=True)
-    name = models.CharField(max_length=1500, verbose_name=_("Course Name"))
-    status = models.IntegerField(choices=CourseStatus, verbose_name=_("Course Status"), default=1)
-    price = models.DecimalField(max_digits=20, decimal_places=2)
-    currency = models.CharField(choices=Currency,verbose_name=_('Currency'),null=True,max_length=5)
-    duration = models.CharField(verbose_name=_("Duration"), null=True, max_length=1200)
-    duration_type = models.IntegerField(choices=DurationType, verbose_name=_("Duration Type"),null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    slug = models.SlugField(unique=True, editable=False)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = _('Course')
-        verbose_name_plural = _('Courses')
-        ordering = ['-id']
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            super(Course, self).save(*args, **kwargs)
-            self.slug = slugify(f"{self.name}-{self.id}")
-            super(Course, self).save(*args, **kwargs)
-        else:
-            self.slug = slugify(f"{self.name}-{self.id}")
-            super(Course, self).save(*args, **kwargs)
 
 
 class UserCompany(models.Model):

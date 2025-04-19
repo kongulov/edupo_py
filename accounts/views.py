@@ -47,6 +47,7 @@ def signup_view(request):
 
             user = form.save(commit=False)
             user.company = company
+            user.usertype = 1
             user.save()
             messages.success(request,
                              'Təbriklər,uğurla qeydiyyatdan keçdiniz!Xahiş edirik mailinizə gələn mesajı təsdiq edəsiniz!')
@@ -62,6 +63,7 @@ def signup_view(request):
 def MyProfileView(request):
     context = {}
     return render(request, 'settings/my-profile/my-account.html', context)
+
 
 @login_required(login_url='/sign-in/')
 def ProfileUpdateView(request):

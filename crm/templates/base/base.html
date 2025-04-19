@@ -39,8 +39,8 @@
     <div class="iq-sidebar  sidebar-default  ">
         <div class="iq-sidebar-logo d-flex align-items-end justify-content-between">
             <a href="{% url "crm:crm-dashboard" %}" class="header-logo">
-                <img src="/static/assets/images/logo.png" class="img-fluid rounded-normal " alt="logo">
-                <span>Datum</span>
+                <img src="{{ request.user.company.company_logo.url }}" class="img-fluid rounded-normal " alt="logo">
+                <span>{{ request.user.company }}</span>
             </a>
             <div class="side-menu-bt-sidebar-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="text-light wrapper-menu" width="30" fill="none"

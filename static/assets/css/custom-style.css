@@ -5,6 +5,13 @@
     border-radius: 5px;
     color: white;
 }
+.text-ellipsis {
+    white-space: nowrap;         /* Bir sətirdə qalsın */
+    overflow: hidden;            /* Daşanı gizlət */
+    text-overflow: ellipsis;     /* ... qoy */
+    max-width: 200px;            /* Maksimum en (dəyərlə oyna) */
+    display: inline-block;       /* Elementin ölçüsünü məhdudlaşdır */
+}
 
 .iq-accordion.career-style.faq-style .iq-accordion-block .accordion-details p {
     padding-top: 0 !important;

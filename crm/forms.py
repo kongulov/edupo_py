@@ -198,6 +198,8 @@ class OrderAddForm(forms.ModelForm):
             'contact_person',
             'course',
             'participants',
+            'price',
+            'total_amount',
         ]
         widgets = {
             'user_company': forms.Select(attrs={'class': 'form-control'}),
@@ -205,6 +207,8 @@ class OrderAddForm(forms.ModelForm):
             'contact_person': forms.Select(attrs={'class': 'form-control'}),
             'course': forms.Select(attrs={'class': 'form-control'}),
             'participants': forms.TextInput(attrs={'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'total_amount': forms.NumberInput(attrs={'class': 'form-control'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -222,6 +226,8 @@ class OrderUpdateForm(forms.ModelForm):
             'contact_person',
             'course',
             'participants',
+            'price',
+            'total_amount',
         ]
         widgets = {
             'user_company': forms.Select(attrs={'class': 'form-control'}),
@@ -229,13 +235,14 @@ class OrderUpdateForm(forms.ModelForm):
             'contact_person': forms.Select(attrs={'class': 'form-control'}),
             'course': forms.Select(attrs={'class': 'form-control'}),
             'participants': forms.TextInput(attrs={'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'total_amount': forms.NumberInput(attrs={'class': 'form-control'}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control col-md-6'})
-
 
 # end Order forms
 

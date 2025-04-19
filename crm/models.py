@@ -163,7 +163,8 @@ class Order(models.Model):
                                related_name='course_orders')
     participants = models.CharField(max_length=1200, verbose_name=_('Participants'))
     order_date = models.DateField(auto_now_add=True, verbose_name=_('Order Date'), null=True)
-
+    price = models.DecimalField(_('Price'), max_digits=10, decimal_places=2,null=True)
+    total_amount = models.DecimalField(_('Total Amount'),null=True, blank=True, max_digits=10, decimal_places=2)
     slug = models.SlugField(max_length=150, unique=True, verbose_name=_('Slug'), null=True, editable=False)
 
     def __str__(self):

@@ -11,6 +11,7 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('', include('crm.urls', namespace='crm')),
     path('', include('main.urls', namespace='main')),
+    path('', include('educlass.urls', namespace='educlass')),
     path('', include('accounts.urls', namespace='accounts')),
 )
 

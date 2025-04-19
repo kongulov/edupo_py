@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'accounts',
     'main',
     'crm',
+    'educlass',
     'ckeditor',
     'crispy_forms',
 

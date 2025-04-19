@@ -110,11 +110,16 @@
                                                 <th scope="col">
                                                     Course
                                                 </th>
+                                                <th scope="col">
+                                                    Price
+                                                </th>
 
                                                 <th scope="col">
                                                     Participants
                                                 </th>
-
+                                                <th scope="col">
+                                                    Total Amount
+                                                </th>
                                                 <th scope="col">
                                                     Order Date
                                                 </th>
@@ -151,9 +156,11 @@
                                                         {{ obj.contact_person }}
                                                     </td>
                                                     <td>{{ obj.course.name }}</td>
+                                                    <td>{{ obj.price }} ({{ obj.course.currency }})</td>
                                                     <td>
                                                         {{ obj.participants }}
                                                     </td>
+                                                    <td>{{ obj.total_amount }} ({{ obj.course.currency }})</td>
 
                                                     <td>
                                                         {{ obj.order_date|date:'j F Y' }}

@@ -61,29 +61,29 @@
     </div>
 
     <!-- JQuery & Script -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#id_course_or_trainings').change(function () {
-                var courseId = $(this).val();
-                if (courseId) {
-                    $.ajax({
-                        url: "{% url 'crm:get_course_price' %}",
-                        data: {
-                            'course_id': courseId
-                        },
-                        success: function (data) {
-                            if (data.price !== null) {
-                                $('#id_price').val(data.price);
-                            }
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#id_course_or_trainings').change(function () {
+            var courseId = $(this).val();
+            if (courseId) {
+                $.ajax({
+                    url: "{% url 'crm:get_course_price' %}",
+                    data: {
+                        'course_id': courseId
+                    },
+                    success: function (data) {
+                        if (data.price !== null) {
+                            $('#id_price').val(data.price);
                         }
-                    });
-                } else {
-                    $('#id_price').val('');
-                }
-            });
+                    }
+                });
+            } else {
+                $('#id_price').val('');
+            }
         });
-    </script>
+    });
+</script>
 
 
 {% endblock %}

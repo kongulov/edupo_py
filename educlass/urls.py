@@ -6,6 +6,12 @@ app_name = 'educlass'
 
 urlpatterns = [
     path('educlass/', educlass_view, name='educlass_view'),
+    path('educlass/course/', course_view, name='course_view'),
+
+    path('educlass/course/course-add/', CourseAddView, name='course-add'),
+    path('educlass/course/<slug>/', CourseUpdateView, name='course-update'),
+    path('add-category/', create_category_ajax, name='create_category_ajax'),
+
     # path('sign-up/', signup_view, name='sign-up'),
     # path('sign-out/', logout_view, name='logout_view'),
     # path('my-profile/', MyProfileView, name='my-profile'),

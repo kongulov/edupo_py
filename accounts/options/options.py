@@ -269,3 +269,10 @@ TICKET_PRIORITY_LEVEL = (
     (2, _('Medium')),
     (3, _('Low')),
 )
+CourseLevel = (
+    (1, 'Beginner'),
+    (2, 'Intermediate'),
+    (3, 'Advanced')
+
+)
+

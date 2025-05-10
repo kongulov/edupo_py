@@ -93,4 +93,8 @@ def course_delete(request, slug):
     return redirect('educlass:course_view')
 
 
-#class view
+# class view
+def ClassView(request):
+    context = {}
+    context['course_list'] = Class.objects.filter(company=request.user.company)
+    return render(request, 'class/class-list.html', context)

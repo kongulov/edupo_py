@@ -98,6 +98,10 @@ class Course(models.Model):
 
 
 class Class(models.Model):
+    author = models.ForeignKey(MyUser, verbose_name=_('Course Author'), on_delete=models.SET_NULL, null=True,
+                               related_name='class_author')
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, verbose_name=_('Company'),
+                                related_name='class_company')
     name = models.CharField(max_length=1200, verbose_name="Class name")
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, related_name='class_course',
                                verbose_name="Class course")

@@ -32,6 +32,10 @@ class Category(models.Model):
 
 
 class Instructor(models.Model):
+    author = models.ForeignKey(MyUser, verbose_name=_('Course Author'), on_delete=models.SET_NULL, null=True,
+                               related_name='instructor_author')
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, verbose_name=_('Company'),
+                                related_name='instructor_company')
     full_name = models.CharField(max_length=1200, verbose_name="Full name")
     slug = models.SlugField(unique=True, editable=False, null=True)
 
@@ -50,6 +54,10 @@ class Instructor(models.Model):
 
 
 class Room(models.Model):
+    author = models.ForeignKey(MyUser, verbose_name=_('Course Author'), on_delete=models.SET_NULL, null=True,
+                               related_name='room_author')
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, verbose_name=_('Company'),
+                                related_name='room_company')
     name = models.CharField(max_length=1200, verbose_name="Room name")
     slug = models.SlugField(unique=True, editable=False, null=True)
 

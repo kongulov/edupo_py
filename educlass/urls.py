@@ -13,7 +13,7 @@ urlpatterns = [
     path('add-category/', create_category_ajax, name='create_category_ajax'),
     # class
     path('educlass/class/', ClassView, name='class_list'),
-    # path('educlass/course/course-add/', CourseAddView, name='course-add'),
+    path('educlass/class/class-add/', ClassAddView, name='class-add'),
     # path('educlass/course/<slug>/', CourseUpdateView, name='course-update'),
     # path('sign-up/', signup_view, name='sign-up'),
     # path('sign-out/', logout_view, name='logout_view'),

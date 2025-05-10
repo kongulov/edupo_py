@@ -98,3 +98,24 @@ def ClassView(request):
     context = {}
     context['course_list'] = Class.objects.filter(company=request.user.company)
     return render(request, 'class/class-list.html', context)
+
+
+@login_required(login_url='/sign-in/')
+def ClassAddView(request):
+    if request.method == 'POST':
+        form = ClassAddForm(request.POST, company=request.user.company)
+        if form.is_valid():
+            class_data = form.save(commit=False)
+            class_data.company = request.user.company
+            class_data.author = request.user
+            class_data.save()
+
+            messages.success(request,
+                             'The new class has been successfully added.')
+            return redirect('educlass:course_view')
+    else:
+        form = ClassAddForm(company=request.user.company)
+    context = {
+        'form': form
+    }
+    return render(request, 'class/class-add.html', context)

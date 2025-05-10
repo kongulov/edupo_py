@@ -120,7 +120,7 @@ class Class(models.Model):
     duration_type = models.IntegerField(choices=DurationType, verbose_name=_("Duration Type"), null=True)
     start_date = models.DateField(verbose_name="Start Date")
     end_date = models.DateField(verbose_name="End Date")
-    status = models.IntegerField(choices=CourseStatus, verbose_name='Status')
+    status = models.IntegerField(choices=ClassStatus, verbose_name='Status')
     class_capacity = models.IntegerField(verbose_name="Class capacity")
     slug = models.SlugField(unique=True, editable=False, null=True)
 

@@ -276,3 +276,9 @@ CourseLevel = (
 
 )
 
+ClassStatus = (
+    (1, 'Active'),
+    (2, 'Upcoming'),
+    (3, 'Completed')
+
+)

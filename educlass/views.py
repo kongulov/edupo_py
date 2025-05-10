@@ -96,7 +96,7 @@ def course_delete(request, slug):
 # class view
 def ClassView(request):
     context = {}
-    context['course_list'] = Class.objects.filter(company=request.user.company)
+    context['class_list'] = Class.objects.filter(company=request.user.company)
     return render(request, 'class/class-list.html', context)
 
 
@@ -108,11 +108,12 @@ def ClassAddView(request):
             class_data = form.save(commit=False)
             class_data.company = request.user.company
             class_data.author = request.user
+            class_data.status = 1
             class_data.save()
 
             messages.success(request,
                              'The new class has been successfully added.')
-            return redirect('educlass:course_view')
+            return redirect('educlass:class_list')
     else:
         form = ClassAddForm(company=request.user.company)
     context = {

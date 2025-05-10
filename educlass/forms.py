@@ -75,6 +75,7 @@ class ClassAddForm(forms.ModelForm):
             'course',
             'instructor',
             'room',
+            'class_capacity',
             'duration',
             'duration_type',
             'start_date',
@@ -87,6 +88,7 @@ class ClassAddForm(forms.ModelForm):
             'course': forms.Select(attrs={'class': 'form-control'}),
             'instructor': forms.Select(attrs={'class': 'form-control'}),
             'room': forms.Select(attrs={'class': 'form-control'}),
+            'class_capacity': forms.TextInput(attrs={'class': 'form-control'}),
             'duration': forms.TextInput(attrs={'class': 'form-control'}),
             'duration_type': forms.Select(attrs={'class': 'form-control'}),
             'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
@@ -114,6 +116,7 @@ class ClassUpdateForm(forms.ModelForm):
             'course',
             'instructor',
             'room',
+            'class_capacity',
             'duration',
             'duration_type',
             'start_date',
@@ -126,10 +129,12 @@ class ClassUpdateForm(forms.ModelForm):
             'course': forms.Select(attrs={'class': 'form-control'}),
             'instructor': forms.Select(attrs={'class': 'form-control'}),
             'room': forms.Select(attrs={'class': 'form-control'}),
+            'class_capacity': forms.TextInput(attrs={'class': 'form-control'}),
             'duration': forms.TextInput(attrs={'class': 'form-control'}),
             'duration_type': forms.Select(attrs={'class': 'form-control'}),
-            'start_date': forms.DateInput(attrs={'class': 'form-control'}),
-            'end_date': forms.DateInput(attrs={'class': 'form-control'}),
+            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+
         }
 
     def __init__(self, *args, **kwargs):
@@ -141,4 +146,3 @@ class ClassUpdateForm(forms.ModelForm):
             self.fields['room'].queryset = Room.objects.filter(company=company)
         for field_name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control col-md-6'})
-

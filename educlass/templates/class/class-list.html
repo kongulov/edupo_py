@@ -97,7 +97,7 @@
                                                     </div>
                                                 </th>
                                                 <th scope="col">
-                                                  Class Name
+                                                    Class Name
                                                 </th>
                                                 <th scope="col">
                                                     Class Number
@@ -110,7 +110,7 @@
                                                 <th scope="col">
                                                     Instructor
                                                 </th>
-                                                <th> Room </th>
+                                                <th> Room</th>
 
                                                 <th scope="col">
                                                     Duration
@@ -133,7 +133,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% for obj in course_list %}
+                                            {% for obj in class_list %}
                                                 <tr class="white-space-no-wrap">
                                                     <td class="pe-0 ">
                                                         <div class="form-check ">
@@ -154,19 +154,23 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        {{ obj.category }}
+                                                        {{ obj.number }}
                                                     </td>
                                                     <td>
-                                                        {{ obj.get_level_display }}
+                                                        {{ obj.course }}
                                                     </td>
+                                                    <td>{{ obj.instructor }}</td>
+                                                    <td>{{ obj.room }}</td>
+
+                                                    <td> {{ obj.duration }} {{ obj.get_duration_type_display }}</td>
+                                                    <td>{{ obj.start_date|date:"j F Y" }}</td>
+
+                                                    <td>{{ obj.start_date|date:"j F Y" }}</td>
+                                                    <td>{{ obj.class_capacity }}</td>
 
                                                     <td>
                                                         {{ obj.get_status_display }}
                                                     </td>
-                                                    <td> {{ obj.duration }} {{ obj.get_duration_type_display }}</td>
-                                                    <td></td>
-                                                    <td></td>
-
                                                     <td>
                                                         <div class="d-flex justify-content-start  align-items-center">
                                                             <a class="" data-bs-toggle="tooltip" data-bs-placement="top"

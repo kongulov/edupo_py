@@ -120,3 +120,27 @@ def ClassAddView(request):
         'form': form
     }
     return render(request, 'class/class-add.html', context)
+
+
+@login_required(login_url='/sign-in/')
+def ClassUpdateView(request, slug):
+    context = {}
+
+    obj = get_object_or_404(Class, slug=slug)
+    context['obj'] = obj
+
+    if request.method == 'POST':
+
+        form = ClassUpdateForm(request.POST, instance=obj, company=request.user.company)
+
+        if form.is_valid():
+            class_data = form.save(commit=False)
+            class_data.save()
+            messages.success(request,
+                             'The class information has been successfully updated.')
+            return redirect('educlass:class_list')
+    else:
+
+        form = ClassUpdateForm(instance=obj, company=request.user.company)
+    context['form'] = form
+    return render(request, 'class/class-update.html', context)

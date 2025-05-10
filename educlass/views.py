@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 
+
 # Create your views here.
 
 
@@ -22,6 +23,7 @@ def create_category_ajax(request):
     category, created = Category.objects.get_or_create(name=name, company=company)
 
     return JsonResponse({'id': category.id, 'name': category.name})
+
 
 def educlass_view(request):
     context = {}
@@ -73,9 +75,22 @@ def CourseUpdateView(request, slug):
             course.save()
             messages.success(request,
                              'The course information has been successfully updated.')
-            return redirect('crm:course_view')
+            return redirect('educlass:course_view')
     else:
 
         form = CourseUpdateForm(instance=obj, company=request.user.company)
     context['form'] = form
     return render(request, 'course/course-update.html', context)
+
+
+# course delete
+def course_delete(request, slug):
+    obj = get_object_or_404(Course, slug=slug)
+    if request.method == 'POST':
+        obj.delete()
+        messages.success('The course information has been successfully deleted.')
+
+    return redirect('educlass:course_view')
+
+
+#class view

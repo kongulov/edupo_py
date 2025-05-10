@@ -10,3 +10,8 @@ class ModelNameAdmin(admin.ModelAdmin):
 @admin.register(Course)
 class ModelCourseAdmin(admin.ModelAdmin):
     list_display = ('name', 'duration', 'level','status')
+
+
+@admin.register(Instructor)
+class ModelInstructorAdmin(admin.ModelAdmin):
+    list_display = ('full_name',)
